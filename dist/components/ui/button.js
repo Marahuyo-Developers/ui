@@ -25,9 +25,9 @@ const buttonVariants = cva("inline-flex items-center justify-center gap-2 whites
         size: 'default',
     },
 });
-function Button({ className, variant, size, asChild = false, isLoading = false, children, ...props }) {
+function Button({ className, variant, size, asChild = false, isLoading = false, loadingIcon = _jsx(Loader2, { className: 'animate-spin' }), children, ...props }) {
     const Comp = asChild ? Slot : 'button';
-    return (_jsxs(Comp, { "data-slot": "button", disabled: isLoading, className: cn(buttonVariants({ variant, size, className })), ...props, children: [isLoading && _jsx(Loader2, {}), children] }));
+    return (_jsxs(Comp, { "data-slot": "button", disabled: isLoading, className: cn(buttonVariants({ variant, size, className })), ...props, children: [isLoading && loadingIcon, children] }));
 }
 export { Button, buttonVariants };
 //# sourceMappingURL=button.js.map
