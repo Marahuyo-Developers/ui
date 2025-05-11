@@ -43,13 +43,17 @@ function Button({
   asChild = false,
   isLoading = false,
   loadingIcon = <Loader2 className='animate-spin' />,
+  iconPosition = 'start',
+  block = false,
   children,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     isLoading?: boolean;
-    loadingIcon?:React.ReactElement
+    loadingIcon?:React.ReactElement,
+    block?:boolean
+    iconPosition?:'start' | 'end'
   }) {
   const Comp = asChild ? Slot : 'button';
 
@@ -57,11 +61,12 @@ function Button({
     <Comp
       data-slot="button"
       disabled={isLoading}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, className }),block && "w-full")}
       {...props}
     >
-      {isLoading && loadingIcon}
+      {isLoading && iconPosition === 'start' && loadingIcon}
       {children}
+      {isLoading && iconPosition === 'end' && loadingIcon}
     </Comp>
   );
 }

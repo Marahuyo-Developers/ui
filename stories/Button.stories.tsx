@@ -69,3 +69,20 @@ export const IsLoadingWithCustomIcon: Story = {
    loadingIcon:<Loader className='animate-spin' />
   }
 }
+
+export const IsLoadingIconAtEnd: Story = {
+  args:{
+   variant:'default',
+   children:'Button',
+   isLoading:true,
+   iconPosition:'end',
+  }
+}
+
+export const FullWidth: Story = {
+  args:{
+   variant:'default',
+   children:'Button',
+   block:true
+  }
+}
