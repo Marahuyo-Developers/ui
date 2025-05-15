@@ -1,7 +1,7 @@
 import React, { type ComponentPropsWithoutRef } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { Primitive } from '@radix-ui/react-primitive';
-import { CommandItem } from '@/components/ui/command';
+import { CommandItem } from './command';
 export interface MultiSelectOptionItem {
     value: string;
     label?: React.ReactNode;

@@ -6,10 +6,10 @@ import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import { Check, X } from 'lucide-react';
 import { CaretSortIcon } from '@radix-ui/react-icons';
 import { createPortal } from 'react-dom';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, } from '@/components/ui/command';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from '@/components/ui/tooltip';
+import { cn } from '../../lib/utils';
+import { Badge } from './badge';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, } from './command';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from './tooltip';
 const MultiSelectContext = React.createContext(undefined);
 const useMultiSelect = () => {
     const context = React.useContext(MultiSelectContext);
