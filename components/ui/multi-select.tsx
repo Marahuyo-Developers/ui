@@ -6,8 +6,8 @@ import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import { Check, X } from 'lucide-react';
 import { CaretSortIcon } from '@radix-ui/react-icons';
 import { createPortal } from 'react-dom';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '../../lib/utils';
+import { Badge } from './badge';
 import {
   Command,
   CommandEmpty,
@@ -16,13 +16,13 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
+} from './command';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from './tooltip';
 
 export interface MultiSelectOptionItem {
   value: string;
