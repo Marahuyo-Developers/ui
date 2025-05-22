@@ -72,7 +72,7 @@ export const MultiSelect = React.forwardRef(({ options, onValueChange, variant, 
     return (_jsxs(Popover, { open: isPopoverOpen, onOpenChange: setIsPopoverOpen, modal: modalPopover, children: [_jsx(PopoverTrigger, { asChild: true, children: _jsx(Button, { ref: ref, ...props, onClick: handleTogglePopover, className: cn('flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto', className), children: selectedValues.length > 0 ? (_jsxs("div", { className: "flex justify-between items-center w-full", children: [_jsxs("div", { className: "flex flex-wrap items-center", children: [selectedValues.slice(0, maxCount).map((value) => {
                                         const option = options.find((o) => o.value === value);
                                         const IconComponent = option?.icon;
-                                        return (_jsxs(Badge, { className: cn(isAnimating ? 'animate-bounce' : '', multiSelectVariants({ variant })), style: { animationDuration: `${animation}s` }, children: [IconComponent && (_jsx(IconComponent, { className: "h-4 w-4 mr-2" })), option?.label, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
+                                        return (_jsxs(Badge, { className: cn(multiSelectVariants({ variant })), children: [IconComponent && (_jsx(IconComponent, { className: "h-4 w-4 mr-2" })), option?.label, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
                                                         event.stopPropagation();
                                                         toggleOption(value);
                                                     } })] }, value));
