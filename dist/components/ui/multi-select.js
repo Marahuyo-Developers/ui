@@ -76,7 +76,7 @@ export const MultiSelect = React.forwardRef(({ options, onValueChange, variant, 
                                                         event.stopPropagation();
                                                         toggleOption(value);
                                                     } })] }, value));
-                                    }), selectedValues.length > maxCount && (_jsxs(Badge, { className: cn('bg-transparent text-foreground border-foreground/1 hover:bg-transparent', isAnimating ? 'animate-bounce' : '', multiSelectVariants({ variant })), style: { animationDuration: `${animation}s` }, children: [`+ ${selectedValues.length - maxCount} more`, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
+                                    }), selectedValues.length > maxCount && (_jsxs(Badge, { className: cn('bg-transparent text-foreground border-foreground/1 hover:bg-transparent', multiSelectVariants({ variant })), children: [`+ ${selectedValues.length - maxCount} more`, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
                                                     event.stopPropagation();
                                                     clearExtraOptions();
                                                 } })] }))] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsx(XIcon, { className: "h-4 mx-2 cursor-pointer text-muted-foreground", onClick: (event) => {
