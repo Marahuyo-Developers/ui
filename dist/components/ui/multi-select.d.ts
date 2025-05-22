@@ -1,106 +1,69 @@
-import React, { type ComponentPropsWithoutRef } from 'react';
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { Primitive } from '@radix-ui/react-primitive';
-import { CommandItem } from './command';
-export interface MultiSelectOptionItem {
-    value: string;
-    label?: React.ReactNode;
-}
-type MultiSelectProps = React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root> & {
-    value?: string[];
-    onValueChange?(value: string[], items: MultiSelectOptionItem[]): void;
-    onSelect?(value: string, item: MultiSelectOptionItem): void;
-    onDeselect?(value: string, item: MultiSelectOptionItem): void;
+import * as React from 'react';
+import { type VariantProps } from 'class-variance-authority';
+/**
+ * Variants for the multi-select component to handle different styles.
+ * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
+ */
+declare const multiSelectVariants: (props?: ({
+    variant?: "default" | "destructive" | "secondary" | "inverted" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Props for MultiSelect component
+ */
+interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof multiSelectVariants> {
+    /**
+     * An array of option objects to be displayed in the multi-select component.
+     * Each option object has a label, value, and an optional icon.
+     */
+    options: {
+        /** The text to display for the option. */
+        label: string;
+        /** The unique value associated with the option. */
+        value: string;
+        /** Optional icon component to display alongside the option. */
+        icon?: React.ComponentType<{
+            className?: string;
+        }>;
+    }[];
+    /**
+     * Callback function triggered when the selected values change.
+     * Receives an array of the new selected values.
+     */
+    onValueChange: (value: string[]) => void;
+    /** The default selected values when the component mounts. */
     defaultValue?: string[];
-    onSearch?(keyword: string | undefined): void;
-    filter?: boolean | ((keyword: string, current: string) => boolean);
-    disabled?: boolean;
-    maxCount?: number;
-};
-declare const MultiSelect: React.FC<MultiSelectProps>;
-interface MultiSelectTriggerProps extends ComponentPropsWithoutRef<typeof Primitive.div> {
-}
-declare const MultiSelectTrigger: React.ForwardRefExoticComponent<MultiSelectTriggerProps & React.RefAttributes<HTMLDivElement>>;
-interface MultiSelectValueProps extends ComponentPropsWithoutRef<typeof Primitive.div> {
+    /**
+     * Placeholder text to be displayed when no values are selected.
+     * Optional, defaults to "Select options".
+     */
     placeholder?: string;
-    maxDisplay?: number;
-    maxItemLength?: number;
+    /**
+     * Animation duration in seconds for the visual effects (e.g., bouncing badges).
+     * Optional, defaults to 0 (no animation).
+     */
+    animation?: number;
+    /**
+     * Maximum number of items to display. Extra selected items will be summarized.
+     * Optional, defaults to 3.
+     */
+    maxCount?: number;
+    /**
+     * The modality of the popover. When set to true, interaction with outside elements
+     * will be disabled and only popover content will be visible to screen readers.
+     * Optional, defaults to false.
+     */
+    modalPopover?: boolean;
+    /**
+     * If true, renders the multi-select component as a child of another component.
+     * Optional, defaults to false.
+     */
+    asChild?: boolean;
+    /**
+     * Additional class names to apply custom styles to the multi-select component.
+     * Optional, can be used to add custom styles.
+     */
+    className?: string;
 }
-declare const MultiSelectValue: React.ForwardRefExoticComponent<MultiSelectValueProps & React.RefAttributes<HTMLDivElement>>;
-declare const MultiSelectSearch: React.ForwardRefExoticComponent<Omit<Omit<Pick<Pick<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "key" | keyof React.InputHTMLAttributes<HTMLInputElement>> & {
-    ref?: React.Ref<HTMLInputElement>;
-} & {
-    asChild?: boolean;
-}, "key" | "asChild" | keyof React.InputHTMLAttributes<HTMLInputElement>>, "onChange" | "type" | "value"> & {
-    value?: string;
-    onValueChange?: (search: string) => void;
-} & React.RefAttributes<HTMLInputElement>, "ref"> & React.RefAttributes<HTMLInputElement>>;
-declare const MultiSelectList: React.ForwardRefExoticComponent<Omit<{
-    children?: React.ReactNode;
-} & Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
-} & {
-    asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild"> & {
-    label?: string;
-} & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
-interface MultiSelectContentProps extends ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> {
-}
-declare const MultiSelectContent: React.ForwardRefExoticComponent<MultiSelectContentProps & React.RefAttributes<HTMLDivElement>>;
-type MultiSelectItemProps = ComponentPropsWithoutRef<typeof CommandItem> & Partial<MultiSelectOptionItem> & {
-    onSelect?: (value: string, item: MultiSelectOptionItem) => void;
-    onDeselect?: (value: string, item: MultiSelectOptionItem) => void;
-};
-declare const MultiSelectItem: React.ForwardRefExoticComponent<Omit<{
-    children?: React.ReactNode;
-} & Omit<Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
-} & {
-    asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild">, "onSelect" | "value" | "disabled"> & {
-    disabled?: boolean;
-    onSelect?: (value: string) => void;
-    value?: string;
-    keywords?: string[];
-    forceMount?: boolean;
-} & React.RefAttributes<HTMLDivElement>, "ref"> & Partial<MultiSelectOptionItem> & {
-    onSelect?: (value: string, item: MultiSelectOptionItem) => void;
-    onDeselect?: (value: string, item: MultiSelectOptionItem) => void;
-} & React.RefAttributes<HTMLDivElement>>;
-declare const MultiSelectGroup: React.ForwardRefExoticComponent<Omit<{
-    children?: React.ReactNode;
-} & Omit<Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
-} & {
-    asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild">, "heading" | "value"> & {
-    heading?: React.ReactNode;
-    value?: string;
-    forceMount?: boolean;
-} & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
-declare const MultiSelectSeparator: React.ForwardRefExoticComponent<Omit<Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
-} & {
-    asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild"> & {
-    alwaysRender?: boolean;
-} & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
-declare const MultiSelectEmpty: React.ForwardRefExoticComponent<Omit<{
-    children?: React.ReactNode;
-} & Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
-} & {
-    asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild"> & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
-export interface MultiSelectOptionSeparator {
-    type: 'separator';
-}
-export interface MultiSelectOptionGroup {
-    heading?: React.ReactNode;
-    value?: string;
-    children: MultiSelectOption[];
-}
-export type MultiSelectOption = Pick<MultiSelectItemProps, 'value' | 'label' | 'disabled' | 'onSelect' | 'onDeselect'> | MultiSelectOptionSeparator | MultiSelectOptionGroup;
-declare const renderMultiSelectOptions: (list: MultiSelectOption[]) => (import("react/jsx-runtime").JSX.Element | null)[];
-export { MultiSelect, MultiSelectTrigger, MultiSelectValue, MultiSelectSearch, MultiSelectContent, MultiSelectList, MultiSelectItem, MultiSelectGroup, MultiSelectSeparator, MultiSelectEmpty, renderMultiSelectOptions, };
+export declare const MultiSelect: React.ForwardRefExoticComponent<MultiSelectProps & React.RefAttributes<HTMLButtonElement>>;
+export {};
 //# sourceMappingURL=multi-select.d.ts.map

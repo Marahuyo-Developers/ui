@@ -1,207 +1,95 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, {} from 'react';
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { Primitive } from '@radix-ui/react-primitive';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import { Check, X } from 'lucide-react';
-import { CaretSortIcon } from '@radix-ui/react-icons';
-import { createPortal } from 'react-dom';
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import * as React from 'react';
+import { cva } from 'class-variance-authority';
+import { CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles, } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { Separator } from './separator';
+import { Button } from './button';
 import { Badge } from './badge';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, } from './command';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from './tooltip';
-const MultiSelectContext = React.createContext(undefined);
-const useMultiSelect = () => {
-    const context = React.useContext(MultiSelectContext);
-    if (!context) {
-        throw new Error('useMultiSelect must be used within MultiSelectProvider');
-    }
-    return context;
-};
-const MultiSelect = ({ value: valueProp, onValueChange: onValueChangeProp, onDeselect: onDeselectProp, onSelect: onSelectProp, defaultValue, open: openProp, onOpenChange, defaultOpen, onSearch, filter, disabled, maxCount, ...popoverProps }) => {
-    const itemCache = React.useRef(new Map()).current;
-    const handleValueChange = React.useCallback((state) => {
-        if (onValueChangeProp) {
-            const items = state.map((value) => itemCache.get(value));
-            onValueChangeProp(state, items);
+/**
+ * Variants for the multi-select component to handle different styles.
+ * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
+ */
+const multiSelectVariants = cva('m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300', {
+    variants: {
+        variant: {
+            default: 'border-foreground/10 text-foreground bg-card hover:bg-card/80',
+            secondary: 'border-foreground/10 bg-secondary text-secondary-foreground hover:bg-secondary/80',
+            destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+            inverted: 'inverted',
+        },
+    },
+    defaultVariants: {
+        variant: 'default',
+    },
+});
+export const MultiSelect = React.forwardRef(({ options, onValueChange, variant, defaultValue = [], placeholder = 'Select options', animation = 0, maxCount = 3, modalPopover = false, asChild = false, className, ...props }, ref) => {
+    const [selectedValues, setSelectedValues] = React.useState(defaultValue);
+    const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+    const [isAnimating, setIsAnimating] = React.useState(false);
+    const handleInputKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            setIsPopoverOpen(true);
         }
-    }, [onValueChangeProp]);
-    const [value, setValue] = useControllableState({
-        prop: valueProp,
-        defaultProp: defaultValue || [],
-        onChange: handleValueChange,
-    });
-    const [open, setOpen] = useControllableState({
-        prop: openProp,
-        defaultProp: defaultOpen || false,
-        onChange: onOpenChange,
-    });
-    const handleSelect = React.useCallback((value, item) => {
-        setValue((prev) => {
-            if (prev?.includes(value)) {
-                return prev;
-            }
-            onSelectProp?.(value, item);
-            return prev ? [...prev, value] : [value];
-        });
-    }, [onSelectProp, setValue]);
-    const handleDeselect = React.useCallback((value, item) => {
-        setValue((prev) => {
-            if (!prev || !prev.includes(value)) {
-                return prev;
-            }
-            onDeselectProp?.(value, item);
-            return prev.filter((v) => v !== value);
-        });
-    }, [onDeselectProp, setValue]);
-    const contextValue = React.useMemo(() => {
-        return {
-            value: value || [],
-            open: open || false,
-            onSearch,
-            filter,
-            disabled,
-            maxCount,
-            onSelect: handleSelect,
-            onDeselect: handleDeselect,
-            itemCache,
-        };
-    }, [
-        value,
-        open,
-        onSearch,
-        filter,
-        disabled,
-        maxCount,
-        handleSelect,
-        handleDeselect,
-    ]);
-    return (_jsx(MultiSelectContext.Provider, { value: contextValue, children: _jsx(PopoverPrimitive.Root, { ...popoverProps, open: open, onOpenChange: setOpen }) }));
-};
-MultiSelect.displayName = 'MultiSelect';
-const PreventClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-};
-const MultiSelectTrigger = React.forwardRef(({ className, children, ...props }, forwardedRef) => {
-    const { disabled } = useMultiSelect();
-    return (_jsx(PopoverPrimitive.Trigger, { ref: forwardedRef, asChild: true, children: _jsxs("div", { "aria-disabled": disabled, "data-disabled": disabled, ...props, className: cn('flex min-h-10 size-full items-center justify-between whitespace-nowrap rounded-sm border border-input border-dashed bg-transparent px-3 py-2 shadow-sm ring-offset-background focus:outline-none focus:ring-1 focus:ring-ring [&>span]:line-clamp-1 text-base', disabled ? 'cursor-not-allowed opacity-50' : 'cursor-text', className), onClick: disabled ? PreventClick : props.onClick, onTouchStart: disabled ? PreventClick : props.onTouchStart, children: [children, _jsx(CaretSortIcon, { className: "size-4 opacity-50" })] }) }));
-});
-MultiSelectTrigger.displayName = 'MultiSelectTrigger';
-const MultiSelectValue = React.forwardRef(({ className, placeholder, maxDisplay, maxItemLength, ...props }, forwardRef) => {
-    const { value, itemCache, onDeselect } = useMultiSelect();
-    const [firstRendered, setFirstRendered] = React.useState(false);
-    const renderRemain = maxDisplay && value.length > maxDisplay ? value.length - maxDisplay : 0;
-    const renderItems = renderRemain ? value.slice(0, maxDisplay) : value;
-    React.useLayoutEffect(() => {
-        setFirstRendered(true);
-    }, []);
-    if (!value.length || !firstRendered) {
-        return (_jsx("span", { className: "pointer-events-none text-muted-foreground", children: placeholder }));
-    }
-    return (_jsx(TooltipProvider, { delayDuration: 300, children: _jsxs("div", { className: cn('flex flex-1 overflow-x-hidden flex-wrap items-center gap-1.5', className), ...props, ref: forwardRef, children: [renderItems.map((value) => {
-                    const item = itemCache.get(value);
-                    const content = item?.label || value;
-                    const child = maxItemLength &&
-                        typeof content === 'string' &&
-                        content.length > maxItemLength
-                        ? `${content.slice(0, maxItemLength)}...`
-                        : content;
-                    const el = (_jsxs(Badge, { variant: "outline", className: "pr-1.5 group/multi-select-badge cursor-pointer rounded-full py-0.5", onClick: (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onDeselect(value, item);
-                        }, children: [_jsx("span", { children: child }), _jsx(X, { className: "size-3 ml-1.5 text-muted-foreground group-hover/multi-select-badge:text-foreground" })] }, value));
-                    if (child !== content) {
-                        return (_jsxs(Tooltip, { children: [_jsx(TooltipTrigger, { className: "inline-flex", children: el }), _jsx(TooltipContent, { side: "bottom", align: "start", className: "z-[51]", children: content })] }, value));
-                    }
-                    return el;
-                }), renderRemain ? (_jsxs("span", { className: "text-muted-foreground text-xs leading-4 py-.5", children: ["+", renderRemain] })) : null] }) }));
-});
-MultiSelectValue.displayName = 'MultiSelectValue';
-const MultiSelectSearch = React.forwardRef((props, ref) => {
-    const { onSearch } = useMultiSelect();
-    return _jsx(CommandInput, { ref: ref, ...props, onValueChange: onSearch });
-});
-MultiSelectSearch.displayName = 'MultiSelectSearch';
-const MultiSelectList = React.forwardRef(({ className, ...props }, ref) => {
-    return (_jsx(CommandList, { ref: ref, className: cn('py-1 px-0 max-h-[unset]', className), ...props }));
-});
-MultiSelectList.displayName = 'MultiSelectList';
-const MultiSelectContent = React.forwardRef(({ className, children, ...props }, ref) => {
-    const context = useMultiSelect();
-    const fragmentRef = React.useRef(document.createDocumentFragment());
-    if (!context.open) {
-        return fragmentRef.current
-            ? createPortal(_jsx(Command, { children: children }), fragmentRef.current)
-            : null;
-    }
-    return (_jsx(PopoverPrimitive.Portal, { forceMount: true, children: _jsx(PopoverPrimitive.Content, { ref: ref, align: "start", sideOffset: 4, collisionPadding: 10, className: cn('z-50 w-full rounded-sm border border-dashed bg-popover p-0 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'), style: {
-                '--radix-select-content-transform-origin': 'var(--radix-popper-transform-origin)',
-                '--radix-select-content-available-width': 'var(--radix-popper-available-width)',
-                '--radix-select-content-available-height': 'var(--radix-popper-available-height)',
-                '--radix-select-trigger-width': 'var(--radix-popper-anchor-width)',
-                '--radix-select-trigger-height': 'var(--radix-popper-anchor-height)',
-            }, ...props, children: _jsx(Command, { className: cn('px-1 max-h-96 w-full min-w-[var(--radix-select-trigger-width)]', className), shouldFilter: !context.onSearch, children: children }) }) }));
-});
-MultiSelectContent.displayName = 'MultiSelectContent';
-const MultiSelectItem = React.forwardRef(({ value, onSelect: onSelectProp, onDeselect: onDeselectProp, children, label, disabled: disabledProp, className, ...props }, forwardedRef) => {
-    const { value: contextValue, maxCount, onSelect, onDeselect, itemCache, } = useMultiSelect();
-    const item = React.useMemo(() => {
-        return value
-            ? {
-                value,
-                label: label || (typeof children === 'string' ? children : undefined),
-            }
-            : undefined;
-    }, [value, label, children]);
-    const selected = Boolean(value && contextValue.includes(value));
-    React.useEffect(() => {
-        if (value) {
-            itemCache.set(value, item);
-        }
-    }, [selected, value, item]);
-    const disabled = Boolean(disabledProp ||
-        (!selected && maxCount && contextValue.length >= maxCount));
-    const handleClick = () => {
-        if (selected) {
-            onDeselectProp?.(value, item);
-            onDeselect(value, item);
-        }
-        else {
-            itemCache.set(value, item);
-            onSelectProp?.(value, item);
-            onSelect(value, item);
+        else if (event.key === 'Backspace' && !event.currentTarget.value) {
+            const newSelectedValues = [...selectedValues];
+            newSelectedValues.pop();
+            setSelectedValues(newSelectedValues);
+            onValueChange(newSelectedValues);
         }
     };
-    return (_jsxs(CommandItem, { ...props, value: value, className: cn(disabled && 'text-muted-foreground cursor-not-allowed', className), disabled: disabled, onSelect: !disabled && value ? handleClick : undefined, ref: forwardedRef, children: [_jsx("span", { className: "mr-2 whitespace-nowrap overflow-hidden text-ellipsis", children: children || label || value }), selected ? _jsx(Check, { className: "h-4 w-4 ml-auto shrink-0" }) : null] }));
-});
-MultiSelectItem.displayName = 'MultiSelectItem';
-const MultiSelectGroup = React.forwardRef((props, forwardRef) => {
-    return _jsx(CommandGroup, { ...props, ref: forwardRef });
-});
-MultiSelectGroup.displayName = 'MultiSelectGroup';
-const MultiSelectSeparator = React.forwardRef((props, forwardRef) => {
-    return _jsx(CommandSeparator, { ...props, ref: forwardRef });
-});
-MultiSelectSeparator.displayName = 'MultiSelectSeparator';
-const MultiSelectEmpty = React.forwardRef(({ children = 'No Content', ...props }, forwardRef) => {
-    return (_jsx(CommandEmpty, { ...props, ref: forwardRef, children: children }));
-});
-MultiSelectEmpty.displayName = 'MultiSelectEmpty';
-const renderMultiSelectOptions = (list) => {
-    return list.map((option, index) => {
-        if ('type' in option) {
-            if (option.type === 'separator') {
-                return _jsx(MultiSelectSeparator, {}, index);
-            }
-            return null;
+    const toggleOption = (option) => {
+        const newSelectedValues = selectedValues.includes(option)
+            ? selectedValues.filter((value) => value !== option)
+            : [...selectedValues, option];
+        setSelectedValues(newSelectedValues);
+        onValueChange(newSelectedValues);
+    };
+    const handleClear = () => {
+        setSelectedValues([]);
+        onValueChange([]);
+    };
+    const handleTogglePopover = () => {
+        setIsPopoverOpen((prev) => !prev);
+    };
+    const clearExtraOptions = () => {
+        const newSelectedValues = selectedValues.slice(0, maxCount);
+        setSelectedValues(newSelectedValues);
+        onValueChange(newSelectedValues);
+    };
+    const toggleAll = () => {
+        if (selectedValues.length === options.length) {
+            handleClear();
         }
-        if ('children' in option) {
-            return (_jsx(MultiSelectGroup, { value: option.value, heading: option.heading, children: renderMultiSelectOptions(option.children) }, option.value || index));
+        else {
+            const allValues = options.map((option) => option.value);
+            setSelectedValues(allValues);
+            onValueChange(allValues);
         }
-        return (_jsx(MultiSelectItem, { ...option, children: option.label }, option.value));
-    });
-};
-export { MultiSelect, MultiSelectTrigger, MultiSelectValue, MultiSelectSearch, MultiSelectContent, MultiSelectList, MultiSelectItem, MultiSelectGroup, MultiSelectSeparator, MultiSelectEmpty, renderMultiSelectOptions, };
+    };
+    return (_jsxs(Popover, { open: isPopoverOpen, onOpenChange: setIsPopoverOpen, modal: modalPopover, children: [_jsx(PopoverTrigger, { asChild: true, children: _jsx(Button, { ref: ref, ...props, onClick: handleTogglePopover, className: cn('flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto', className), children: selectedValues.length > 0 ? (_jsxs("div", { className: "flex justify-between items-center w-full", children: [_jsxs("div", { className: "flex flex-wrap items-center", children: [selectedValues.slice(0, maxCount).map((value) => {
+                                        const option = options.find((o) => o.value === value);
+                                        const IconComponent = option?.icon;
+                                        return (_jsxs(Badge, { className: cn(isAnimating ? 'animate-bounce' : '', multiSelectVariants({ variant })), style: { animationDuration: `${animation}s` }, children: [IconComponent && (_jsx(IconComponent, { className: "h-4 w-4 mr-2" })), option?.label, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
+                                                        event.stopPropagation();
+                                                        toggleOption(value);
+                                                    } })] }, value));
+                                    }), selectedValues.length > maxCount && (_jsxs(Badge, { className: cn('bg-transparent text-foreground border-foreground/1 hover:bg-transparent', isAnimating ? 'animate-bounce' : '', multiSelectVariants({ variant })), style: { animationDuration: `${animation}s` }, children: [`+ ${selectedValues.length - maxCount} more`, _jsx(XCircle, { className: "ml-2 h-4 w-4 cursor-pointer", onClick: (event) => {
+                                                    event.stopPropagation();
+                                                    clearExtraOptions();
+                                                } })] }))] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsx(XIcon, { className: "h-4 mx-2 cursor-pointer text-muted-foreground", onClick: (event) => {
+                                            event.stopPropagation();
+                                            handleClear();
+                                        } }), _jsx(Separator, { orientation: "vertical", className: "flex min-h-6 h-full" }), _jsx(ChevronDown, { className: "h-4 mx-2 cursor-pointer text-muted-foreground" })] })] })) : (_jsxs("div", { className: "flex items-center justify-between w-full mx-auto", children: [_jsx("span", { className: "text-sm text-muted-foreground mx-3", children: placeholder }), _jsx(ChevronDown, { className: "h-4 cursor-pointer text-muted-foreground mx-2" })] })) }) }), _jsx(PopoverContent, { className: "w-auto p-0", align: "start", onEscapeKeyDown: () => setIsPopoverOpen(false), children: _jsxs(Command, { children: [_jsx(CommandInput, { placeholder: "Search...", onKeyDown: handleInputKeyDown }), _jsxs(CommandList, { children: [_jsx(CommandEmpty, { children: "No results found." }), _jsxs(CommandGroup, { children: [_jsxs(CommandItem, { onSelect: toggleAll, className: "cursor-pointer", children: [_jsx("div", { className: cn('mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary', selectedValues.length === options.length
+                                                        ? 'bg-primary text-primary-foreground'
+                                                        : 'opacity-50 [&_svg]:invisible'), children: _jsx(CheckIcon, { className: "h-4 w-4" }) }), _jsx("span", { children: "(Select All)" })] }, "all"), options.map((option) => {
+                                            const isSelected = selectedValues.includes(option.value);
+                                            return (_jsxs(CommandItem, { onSelect: () => toggleOption(option.value), className: "cursor-pointer", children: [_jsx("div", { className: cn('mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary', isSelected
+                                                            ? 'bg-primary text-primary-foreground'
+                                                            : 'opacity-50 [&_svg]:invisible'), children: _jsx(CheckIcon, { className: "h-4 w-4" }) }), option.icon && (_jsx(option.icon, { className: "mr-2 h-4 w-4 text-muted-foreground" })), _jsx("span", { children: option.label })] }, option.value));
+                                        })] }), _jsx(CommandSeparator, {}), _jsx(CommandGroup, { children: _jsxs("div", { className: "flex items-center justify-between", children: [selectedValues.length > 0 && (_jsxs(_Fragment, { children: [_jsx(CommandItem, { onSelect: handleClear, className: "flex-1 justify-center cursor-pointer", children: "Clear" }), _jsx(Separator, { orientation: "vertical", className: "flex min-h-6 h-full" })] })), _jsx(CommandItem, { onSelect: () => setIsPopoverOpen(false), className: "flex-1 justify-center cursor-pointer max-w-full", children: "Close" })] }) })] })] }) }), animation > 0 && selectedValues.length > 0 && (_jsx(WandSparkles, { className: cn('cursor-pointer my-2 text-foreground bg-background w-3 h-3', isAnimating ? '' : 'text-muted-foreground'), onClick: () => setIsAnimating(!isAnimating) }))] }));
+});
+MultiSelect.displayName = 'MultiSelect';
 //# sourceMappingURL=multi-select.js.map
