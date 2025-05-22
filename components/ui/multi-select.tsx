@@ -210,7 +210,6 @@ export const MultiSelect = React.forwardRef<
                       <Badge
                         key={value}
                         className={cn(multiSelectVariants({ variant }))}
-                        style={{ animationDuration: `${animation}s` }}
                       >
                         {IconComponent && (
                           <IconComponent className="h-4 w-4 mr-2" />
