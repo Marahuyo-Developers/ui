@@ -209,10 +209,7 @@ export const MultiSelect = React.forwardRef<
                     return (
                       <Badge
                         key={value}
-                        className={cn(
-                          isAnimating ? 'animate-bounce' : '',
-                          multiSelectVariants({ variant }),
-                        )}
+                        className={cn(multiSelectVariants({ variant }))}
                         style={{ animationDuration: `${animation}s` }}
                       >
                         {IconComponent && (
