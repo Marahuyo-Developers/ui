@@ -17,9 +17,9 @@
       "import": "./dist/hooks/*.js",
       "types": "./dist/hooks/*.d.ts"
     },
-    "./ui/*": {
-      "import": "./dist/components/ui/*.js",
-      "types": "./dist/components/ui/*.d.ts"
+    "./*": {
+      "import": "./dist/components/*.js",
+      "types": "./dist/components/*.d.ts"
     },
     "./package.json": "./package.json"
   },
