@@ -1,6 +1,6 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
-import { Dialog } from './dialog';
+import { Dialog } from '../../components/ui/dialog';
 declare function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>): import("react/jsx-runtime").JSX.Element;
 declare function CommandDialog({ title, description, children, ...props }: React.ComponentProps<typeof Dialog> & {
     title?: string;

@@ -1,10 +1,9 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import * as React from 'react';
 import { Command as CommandPrimitive } from 'cmdk';
 import { SearchIcon } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, } from './dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, } from '../../components/ui/dialog';
 function Command({ className, ...props }) {
     return (_jsx(CommandPrimitive, { "data-slot": "command", className: cn('bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md', className), ...props }));
 }

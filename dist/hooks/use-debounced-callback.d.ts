@@ -1,0 +1,2 @@
+export declare function useDebouncedCallback<T extends (...args: never[]) => unknown>(callback: T, delay: number): (...args: Parameters<T>) => void;
+//# sourceMappingURL=use-debounced-callback.d.ts.map

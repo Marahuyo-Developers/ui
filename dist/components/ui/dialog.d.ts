@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 declare function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
 declare function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>): import("react/jsx-runtime").JSX.Element;
