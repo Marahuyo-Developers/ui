@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import type { ExtendedColumnFilter, ExtendedColumnSort } from '../types/data-table';
+import { z } from "zod";
+import type { ExtendedColumnFilter, ExtendedColumnSort } from "../types/data-table";
 export declare const getSortingStateParser: <TData>(columnIds?: string[] | Set<string>) => import("nuqs").ParserBuilder<ExtendedColumnSort<TData>[]>;
 declare const filterItemSchema: z.ZodObject<{
     id: z.ZodString;

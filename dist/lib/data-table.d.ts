@@ -1,5 +1,5 @@
-import type { ExtendedColumnFilter, FilterOperator, FilterVariant } from '../types/data-table';
-import type { Column } from '@tanstack/react-table';
+import type { ExtendedColumnFilter, FilterOperator, FilterVariant } from "../types/data-table";
+import type { Column } from "@tanstack/react-table";
 export declare function getCommonPinningStyles<TData>({ column, withBorder, }: {
     column: Column<TData>;
     withBorder?: boolean;

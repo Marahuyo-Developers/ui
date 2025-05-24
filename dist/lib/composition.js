@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 /**
  * A utility to compose multiple event handlers into a single event handler.
- * Run originalEventHandler first, then ourEventHandler unless prevented.
+ * Call originalEventHandler first, then ourEventHandler unless prevented.
  */
 function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
     return function handleEvent(event) {
@@ -17,7 +17,7 @@ function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForD
  * This utility takes care of different types of refs: callback refs and RefObject(s).
  */
 function setRef(ref, value) {
-    if (typeof ref === 'function') {
+    if (typeof ref === "function") {
         return ref(value);
     }
     if (ref !== null && ref !== undefined) {
@@ -33,7 +33,7 @@ function composeRefs(...refs) {
         let hasCleanup = false;
         const cleanups = refs.map((ref) => {
             const cleanup = setRef(ref, node);
-            if (!hasCleanup && typeof cleanup === 'function') {
+            if (!hasCleanup && typeof cleanup === "function") {
                 hasCleanup = true;
             }
             return cleanup;
@@ -46,7 +46,7 @@ function composeRefs(...refs) {
             return () => {
                 for (let i = 0; i < cleanups.length; i++) {
                     const cleanup = cleanups[i];
-                    if (typeof cleanup === 'function') {
+                    if (typeof cleanup === "function") {
                         cleanup();
                     }
                     else {

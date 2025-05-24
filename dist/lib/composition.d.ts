@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 /**
  * A utility to compose multiple event handlers into a single event handler.
- * Run originalEventHandler first, then ourEventHandler unless prevented.
+ * Call originalEventHandler first, then ourEventHandler unless prevented.
  */
 declare function composeEventHandlers<E>(originalEventHandler?: (event: E) => void, ourEventHandler?: (event: E) => void, { checkForDefaultPrevented }?: {
     checkForDefaultPrevented?: boolean | undefined;
