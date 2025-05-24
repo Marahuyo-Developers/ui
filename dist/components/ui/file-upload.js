@@ -1,19 +1,19 @@
-"use client";
+'use client';
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import { cn } from "../../lib/utils";
-import { Slot } from "@radix-ui/react-slot";
-import { FileArchiveIcon, FileAudioIcon, FileCodeIcon, FileCogIcon, FileIcon, FileTextIcon, FileVideoIcon, } from "lucide-react";
-import * as React from "react";
-const ROOT_NAME = "FileUpload";
-const DROPZONE_NAME = "FileUploadDropzone";
-const TRIGGER_NAME = "FileUploadTrigger";
-const LIST_NAME = "FileUploadList";
-const ITEM_NAME = "FileUploadItem";
-const ITEM_PREVIEW_NAME = "FileUploadItemPreview";
-const ITEM_METADATA_NAME = "FileUploadItemMetadata";
-const ITEM_PROGRESS_NAME = "FileUploadItemProgress";
-const ITEM_DELETE_NAME = "FileUploadItemDelete";
-const CLEAR_NAME = "FileUploadClear";
+import { cn } from '../../lib/utils';
+import { Slot } from '@radix-ui/react-slot';
+import { FileArchiveIcon, FileAudioIcon, FileCodeIcon, FileCogIcon, FileIcon, FileTextIcon, FileVideoIcon, } from 'lucide-react';
+import * as React from 'react';
+const ROOT_NAME = 'FileUpload';
+const DROPZONE_NAME = 'FileUploadDropzone';
+const TRIGGER_NAME = 'FileUploadTrigger';
+const LIST_NAME = 'FileUploadList';
+const ITEM_NAME = 'FileUploadItem';
+const ITEM_PREVIEW_NAME = 'FileUploadItemPreview';
+const ITEM_METADATA_NAME = 'FileUploadItemMetadata';
+const ITEM_PROGRESS_NAME = 'FileUploadItemProgress';
+const ITEM_DELETE_NAME = 'FileUploadItemDelete';
+const CLEAR_NAME = 'FileUploadClear';
 const FILE_UPLOAD_ERRORS = {
     [ROOT_NAME]: `\`${ROOT_NAME}\` must be used as root component`,
     [DROPZONE_NAME]: `\`${DROPZONE_NAME}\` must be within \`${ROOT_NAME}\``,
@@ -26,7 +26,7 @@ const FILE_UPLOAD_ERRORS = {
     [ITEM_DELETE_NAME]: `\`${ITEM_DELETE_NAME}\` must be within \`${ITEM_NAME}\``,
     [CLEAR_NAME]: `\`${CLEAR_NAME}\` must be within \`${ROOT_NAME}\``,
 };
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 function useAsRef(data) {
     const ref = React.useRef(data);
     useIsomorphicLayoutEffect(() => {
@@ -44,7 +44,7 @@ function useLazyRef(fn) {
 const DirectionContext = React.createContext(undefined);
 function useDirection(dirProp) {
     const contextDir = React.useContext(DirectionContext);
-    return dirProp ?? contextDir ?? "ltr";
+    return dirProp ?? contextDir ?? 'ltr';
 }
 function createStore(listeners, files, onValueChange, invalid) {
     const initialState = {
@@ -55,12 +55,12 @@ function createStore(listeners, files, onValueChange, invalid) {
     let state = initialState;
     function reducer(state, action) {
         switch (action.variant) {
-            case "ADD_FILES": {
+            case 'ADD_FILES': {
                 for (const file of action.files) {
                     files.set(file, {
                         file,
                         progress: 0,
-                        status: "idle",
+                        status: 'idle',
                     });
                 }
                 if (onValueChange) {
@@ -69,7 +69,7 @@ function createStore(listeners, files, onValueChange, invalid) {
                 }
                 return { ...state, files };
             }
-            case "SET_FILES": {
+            case 'SET_FILES': {
                 const newFileSet = new Set(action.files);
                 for (const existingFile of files.keys()) {
                     if (!newFileSet.has(existingFile)) {
@@ -82,46 +82,46 @@ function createStore(listeners, files, onValueChange, invalid) {
                         files.set(file, {
                             file,
                             progress: 0,
-                            status: "idle",
+                            status: 'idle',
                         });
                     }
                 }
                 return { ...state, files };
             }
-            case "SET_PROGRESS": {
+            case 'SET_PROGRESS': {
                 const fileState = files.get(action.file);
                 if (fileState) {
                     files.set(action.file, {
                         ...fileState,
                         progress: action.progress,
-                        status: "uploading",
+                        status: 'uploading',
                     });
                 }
                 return { ...state, files };
             }
-            case "SET_SUCCESS": {
+            case 'SET_SUCCESS': {
                 const fileState = files.get(action.file);
                 if (fileState) {
                     files.set(action.file, {
                         ...fileState,
                         progress: 100,
-                        status: "success",
+                        status: 'success',
                     });
                 }
                 return { ...state, files };
             }
-            case "SET_ERROR": {
+            case 'SET_ERROR': {
                 const fileState = files.get(action.file);
                 if (fileState) {
                     files.set(action.file, {
                         ...fileState,
                         error: action.error,
-                        status: "error",
+                        status: 'error',
                     });
                 }
                 return { ...state, files };
             }
-            case "REMOVE_FILE": {
+            case 'REMOVE_FILE': {
                 files.delete(action.file);
                 if (onValueChange) {
                     const fileList = Array.from(files.values()).map((fileState) => fileState.file);
@@ -129,13 +129,13 @@ function createStore(listeners, files, onValueChange, invalid) {
                 }
                 return { ...state, files };
             }
-            case "SET_DRAG_OVER": {
+            case 'SET_DRAG_OVER': {
                 return { ...state, dragOver: action.dragOver };
             }
-            case "SET_INVALID": {
+            case 'SET_INVALID': {
                 return { ...state, invalid: action.invalid };
             }
-            case "CLEAR": {
+            case 'CLEAR': {
                 files.clear();
                 if (onValueChange) {
                     onValueChange([]);
@@ -217,12 +217,12 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
     }), [dropzoneId, inputId, listId, labelId, dir, disabled]);
     React.useEffect(() => {
         if (isControlled) {
-            store.dispatch({ variant: "SET_FILES", files: value });
+            store.dispatch({ variant: 'SET_FILES', files: value });
         }
         else if (defaultValue &&
             defaultValue.length > 0 &&
             !store.getState().files.size) {
-            store.dispatch({ variant: "SET_FILES", files: defaultValue });
+            store.dispatch({ variant: 'SET_FILES', files: defaultValue });
         }
     }, [value, defaultValue, isControlled, store]);
     const onFilesChange = React.useCallback((originalFiles) => {
@@ -253,7 +253,7 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
         const rejectedFiles = [];
         for (const file of filesToProcess) {
             let rejected = false;
-            let rejectionMessage = "";
+            let rejectionMessage = '';
             if (propsRef.current.onFileValidate) {
                 const validationMessage = propsRef.current.onFileValidate(file);
                 if (validationMessage) {
@@ -266,15 +266,15 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
             }
             if (propsRef.current.accept) {
                 const acceptTypes = propsRef.current.accept
-                    .split(",")
+                    .split(',')
                     .map((t) => t.trim());
                 const fileType = file.type;
-                const fileExtension = `.${file.name.split(".").pop()}`;
+                const fileExtension = `.${file.name.split('.').pop()}`;
                 if (!acceptTypes.some((type) => type === fileType ||
                     type === fileExtension ||
-                    (type.includes("/*") &&
-                        fileType.startsWith(type.replace("/*", "/"))))) {
-                    rejectionMessage = "File type not accepted";
+                    (type.includes('/*') &&
+                        fileType.startsWith(type.replace('/*', '/'))))) {
+                    rejectionMessage = 'File type not accepted';
                     propsRef.current.onFileReject?.(file, rejectionMessage);
                     rejected = true;
                     invalid = true;
@@ -282,7 +282,7 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
             }
             if (propsRef.current.maxSize &&
                 file.size > propsRef.current.maxSize) {
-                rejectionMessage = "File too large";
+                rejectionMessage = 'File too large';
                 propsRef.current.onFileReject?.(file, rejectionMessage);
                 rejected = true;
                 invalid = true;
@@ -295,13 +295,13 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
             }
         }
         if (invalid) {
-            store.dispatch({ variant: "SET_INVALID", invalid });
+            store.dispatch({ variant: 'SET_INVALID', invalid });
             setTimeout(() => {
-                store.dispatch({ variant: "SET_INVALID", invalid: false });
+                store.dispatch({ variant: 'SET_INVALID', invalid: false });
             }, 2000);
         }
         if (acceptedFiles.length > 0) {
-            store.dispatch({ variant: "ADD_FILES", files: acceptedFiles });
+            store.dispatch({ variant: 'ADD_FILES', files: acceptedFiles });
             if (isControlled && propsRef.current.onValueChange) {
                 const currentFiles = Array.from(store.getState().files.values()).map((f) => f.file);
                 propsRef.current.onValueChange([...currentFiles]);
@@ -322,40 +322,40 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
     const onFilesUpload = React.useCallback(async (files) => {
         try {
             for (const file of files) {
-                store.dispatch({ variant: "SET_PROGRESS", file, progress: 0 });
+                store.dispatch({ variant: 'SET_PROGRESS', file, progress: 0 });
             }
             if (propsRef.current.onUpload) {
                 await propsRef.current.onUpload(files, {
                     onProgress: (file, progress) => {
                         store.dispatch({
-                            variant: "SET_PROGRESS",
+                            variant: 'SET_PROGRESS',
                             file,
                             progress: Math.min(Math.max(0, progress), 100),
                         });
                     },
                     onSuccess: (file) => {
-                        store.dispatch({ variant: "SET_SUCCESS", file });
+                        store.dispatch({ variant: 'SET_SUCCESS', file });
                     },
                     onError: (file, error) => {
                         store.dispatch({
-                            variant: "SET_ERROR",
+                            variant: 'SET_ERROR',
                             file,
-                            error: error.message ?? "Upload failed",
+                            error: error.message ?? 'Upload failed',
                         });
                     },
                 });
             }
             else {
                 for (const file of files) {
-                    store.dispatch({ variant: "SET_SUCCESS", file });
+                    store.dispatch({ variant: 'SET_SUCCESS', file });
                 }
             }
         }
         catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Upload failed";
+            const errorMessage = error instanceof Error ? error.message : 'Upload failed';
             for (const file of files) {
                 store.dispatch({
-                    variant: "SET_ERROR",
+                    variant: 'SET_ERROR',
                     file,
                     error: errorMessage,
                 });
@@ -365,10 +365,10 @@ const FileUploadRoot = React.forwardRef((props, forwardedRef) => {
     const onInputChange = React.useCallback((event) => {
         const files = Array.from(event.target.files ?? []);
         onFilesChange(files);
-        event.target.value = "";
+        event.target.value = '';
     }, [onFilesChange]);
-    const RootPrimitive = asChild ? Slot : "div";
-    return (_jsx(DirectionContext.Provider, { value: dir, children: _jsx(StoreContext.Provider, { value: store, children: _jsx(FileUploadContext.Provider, { value: contextValue, children: _jsxs(RootPrimitive, { "data-disabled": disabled ? "" : undefined, "data-slot": "file-upload", dir: dir, ...rootProps, ref: forwardedRef, className: cn("relative flex flex-col gap-2", className), children: [children, _jsx("input", { type: "file", id: inputId, "aria-labelledby": labelId, "aria-describedby": dropzoneId, ref: inputRef, tabIndex: -1, accept: accept, name: name, disabled: disabled, multiple: multiple, required: required, className: "sr-only", onChange: onInputChange }), _jsx("span", { id: labelId, className: "sr-only", children: label ?? "File upload" })] }) }) }) }));
+    const RootPrimitive = asChild ? Slot : 'div';
+    return (_jsx(DirectionContext.Provider, { value: dir, children: _jsx(StoreContext.Provider, { value: store, children: _jsx(FileUploadContext.Provider, { value: contextValue, children: _jsxs(RootPrimitive, { "data-disabled": disabled ? '' : undefined, "data-slot": "file-upload", dir: dir, ...rootProps, ref: forwardedRef, className: cn('relative flex flex-col gap-2', className), children: [children, _jsx("input", { type: "file", id: inputId, "aria-labelledby": labelId, "aria-describedby": dropzoneId, ref: inputRef, tabIndex: -1, accept: accept, name: name, disabled: disabled, multiple: multiple, required: required, className: "sr-only", onChange: onInputChange }), _jsx("span", { id: labelId, className: "sr-only", children: label ?? 'File upload' })] }) }) }) }));
 });
 FileUploadRoot.displayName = ROOT_NAME;
 const FileUploadDropzone = React.forwardRef((props, forwardedRef) => {
@@ -394,14 +394,14 @@ const FileUploadDropzone = React.forwardRef((props, forwardedRef) => {
         if (event.defaultPrevented)
             return;
         event.preventDefault();
-        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
+        store.dispatch({ variant: 'SET_DRAG_OVER', dragOver: true });
     }, [store, propsRef.current.onDragOver]);
     const onDragEnter = React.useCallback((event) => {
         propsRef.current?.onDragEnter?.(event);
         if (event.defaultPrevented)
             return;
         event.preventDefault();
-        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
+        store.dispatch({ variant: 'SET_DRAG_OVER', dragOver: true });
     }, [store, propsRef.current.onDragEnter]);
     const onDragLeave = React.useCallback((event) => {
         propsRef.current?.onDragLeave?.(event);
@@ -414,14 +414,14 @@ const FileUploadDropzone = React.forwardRef((props, forwardedRef) => {
             return;
         }
         event.preventDefault();
-        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
+        store.dispatch({ variant: 'SET_DRAG_OVER', dragOver: false });
     }, [store, propsRef.current.onDragLeave]);
     const onDrop = React.useCallback((event) => {
         propsRef.current?.onDrop?.(event);
         if (event.defaultPrevented)
             return;
         event.preventDefault();
-        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
+        store.dispatch({ variant: 'SET_DRAG_OVER', dragOver: false });
         const files = Array.from(event.dataTransfer.files);
         const inputElement = context.inputRef.current;
         if (!inputElement)
@@ -431,21 +431,21 @@ const FileUploadDropzone = React.forwardRef((props, forwardedRef) => {
             dataTransfer.items.add(file);
         }
         inputElement.files = dataTransfer.files;
-        inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+        inputElement.dispatchEvent(new Event('change', { bubbles: true }));
     }, [store, context.inputRef, propsRef.current.onDrop]);
     const onPaste = React.useCallback((event) => {
         propsRef.current?.onPaste?.(event);
         if (event.defaultPrevented)
             return;
         event.preventDefault();
-        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
+        store.dispatch({ variant: 'SET_DRAG_OVER', dragOver: false });
         const items = event.clipboardData?.items;
         if (!items)
             return;
         const files = [];
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            if (item?.kind === "file") {
+            if (item?.kind === 'file') {
                 const file = item.getAsFile();
                 if (file) {
                     files.push(file);
@@ -462,18 +462,18 @@ const FileUploadDropzone = React.forwardRef((props, forwardedRef) => {
             dataTransfer.items.add(file);
         }
         inputElement.files = dataTransfer.files;
-        inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+        inputElement.dispatchEvent(new Event('change', { bubbles: true }));
     }, [store, context.inputRef, propsRef]);
     const onKeyDown = React.useCallback((event) => {
         propsRef.current?.onKeyDown?.(event);
         if (!event.defaultPrevented &&
-            (event.key === "Enter" || event.key === " ")) {
+            (event.key === 'Enter' || event.key === ' ')) {
             event.preventDefault();
             context.inputRef.current?.click();
         }
     }, [context.inputRef, propsRef.current.onKeyDown]);
-    const DropzonePrimitive = asChild ? Slot : "div";
-    return (_jsx(DropzonePrimitive, { role: "region", id: context.dropzoneId, "aria-controls": `${context.inputId} ${context.listId}`, "aria-disabled": context.disabled, "aria-invalid": invalid, "data-disabled": context.disabled ? "" : undefined, "data-dragging": dragOver ? "" : undefined, "data-invalid": invalid ? "" : undefined, "data-slot": "file-upload-dropzone", dir: context.dir, tabIndex: context.disabled ? undefined : 0, ...dropzoneProps, ref: forwardedRef, className: cn("relative flex select-none flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 outline-none transition-colors hover:bg-accent/30 focus-visible:border-ring/50 data-[disabled]:pointer-events-none data-[dragging]:border-primary data-[invalid]:border-destructive data-[invalid]:ring-destructive/20", className), onClick: onClick, onDragEnter: onDragEnter, onDragLeave: onDragLeave, onDragOver: onDragOver, onDrop: onDrop, onKeyDown: onKeyDown, onPaste: onPaste }));
+    const DropzonePrimitive = asChild ? Slot : 'div';
+    return (_jsx(DropzonePrimitive, { role: "region", id: context.dropzoneId, "aria-controls": `${context.inputId} ${context.listId}`, "aria-disabled": context.disabled, "aria-invalid": invalid, "data-disabled": context.disabled ? '' : undefined, "data-dragging": dragOver ? '' : undefined, "data-invalid": invalid ? '' : undefined, "data-slot": "file-upload-dropzone", dir: context.dir, tabIndex: context.disabled ? undefined : 0, ...dropzoneProps, ref: forwardedRef, className: cn('relative flex select-none flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 outline-none transition-colors hover:bg-accent/30 focus-visible:border-ring/50 data-[disabled]:pointer-events-none data-[dragging]:border-primary data-[invalid]:border-destructive data-[invalid]:ring-destructive/20', className), onClick: onClick, onDragEnter: onDragEnter, onDragLeave: onDragLeave, onDragOver: onDragOver, onDrop: onDrop, onKeyDown: onKeyDown, onPaste: onPaste }));
 });
 FileUploadDropzone.displayName = DROPZONE_NAME;
 const FileUploadTrigger = React.forwardRef((props, forwardedRef) => {
@@ -486,18 +486,18 @@ const FileUploadTrigger = React.forwardRef((props, forwardedRef) => {
             return;
         context.inputRef.current?.click();
     }, [context.inputRef, propsRef.current]);
-    const TriggerPrimitive = asChild ? Slot : "button";
-    return (_jsx(TriggerPrimitive, { type: "button", "aria-controls": context.inputId, "data-disabled": context.disabled ? "" : undefined, "data-slot": "file-upload-trigger", ...triggerProps, ref: forwardedRef, disabled: context.disabled, onClick: onClick }));
+    const TriggerPrimitive = asChild ? Slot : 'button';
+    return (_jsx(TriggerPrimitive, { type: "button", "aria-controls": context.inputId, "data-disabled": context.disabled ? '' : undefined, "data-slot": "file-upload-trigger", ...triggerProps, ref: forwardedRef, disabled: context.disabled, onClick: onClick }));
 });
 FileUploadTrigger.displayName = TRIGGER_NAME;
 const FileUploadList = React.forwardRef((props, forwardedRef) => {
-    const { className, orientation = "vertical", asChild, forceMount, ...listProps } = props;
+    const { className, orientation = 'vertical', asChild, forceMount, ...listProps } = props;
     const context = useFileUploadContext(LIST_NAME);
     const shouldRender = forceMount || useStore((state) => state.files.size > 0);
     if (!shouldRender)
         return null;
-    const ListPrimitive = asChild ? Slot : "div";
-    return (_jsx(ListPrimitive, { role: "list", id: context.listId, "aria-orientation": orientation, "data-orientation": orientation, "data-slot": "file-upload-list", "data-state": shouldRender ? "active" : "inactive", dir: context.dir, ...listProps, ref: forwardedRef, className: cn("data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 data-[state=inactive]:slide-out-to-top-2 data-[state=active]:slide-in-from-top-2 flex flex-col gap-2 data-[state=active]:animate-in data-[state=inactive]:animate-out", orientation === "horizontal" && "flex-row overflow-x-auto p-1.5", className) }));
+    const ListPrimitive = asChild ? Slot : 'div';
+    return (_jsx(ListPrimitive, { role: "list", id: context.listId, "aria-orientation": orientation, "data-orientation": orientation, "data-slot": "file-upload-list", "data-state": shouldRender ? 'active' : 'inactive', dir: context.dir, ...listProps, ref: forwardedRef, className: cn('data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 data-[state=inactive]:slide-out-to-top-2 data-[state=active]:slide-in-from-top-2 flex flex-col gap-2 data-[state=active]:animate-in data-[state=inactive]:animate-out', orientation === 'horizontal' && 'flex-row overflow-x-auto p-1.5', className) }));
 });
 FileUploadList.displayName = LIST_NAME;
 const FileUploadItemContext = React.createContext(null);
@@ -534,59 +534,59 @@ const FileUploadItem = React.forwardRef((props, forwardedRef) => {
         return null;
     const statusText = fileState.error
         ? `Error: ${fileState.error}`
-        : fileState.status === "uploading"
+        : fileState.status === 'uploading'
             ? `Uploading: ${fileState.progress}% complete`
-            : fileState.status === "success"
-                ? "Upload complete"
-                : "Ready to upload";
-    const ItemPrimitive = asChild ? Slot : "div";
-    return (_jsx(FileUploadItemContext.Provider, { value: itemContext, children: _jsxs(ItemPrimitive, { role: "listitem", id: id, "aria-setsize": fileCount, "aria-posinset": fileIndex, "aria-describedby": `${nameId} ${sizeId} ${statusId} ${fileState.error ? messageId : ""}`, "aria-labelledby": nameId, "data-slot": "file-upload-item", dir: context.dir, ...itemProps, ref: forwardedRef, className: cn("relative flex items-center gap-2.5 rounded-md border p-3", className), children: [props.children, _jsx("span", { id: statusId, className: "sr-only", children: statusText })] }) }));
+            : fileState.status === 'success'
+                ? 'Upload complete'
+                : 'Ready to upload';
+    const ItemPrimitive = asChild ? Slot : 'div';
+    return (_jsx(FileUploadItemContext.Provider, { value: itemContext, children: _jsxs(ItemPrimitive, { role: "listitem", id: id, "aria-setsize": fileCount, "aria-posinset": fileIndex, "aria-describedby": `${nameId} ${sizeId} ${statusId} ${fileState.error ? messageId : ''}`, "aria-labelledby": nameId, "data-slot": "file-upload-item", dir: context.dir, ...itemProps, ref: forwardedRef, className: cn('relative flex items-center gap-2.5 rounded-md border p-3', className), children: [props.children, _jsx("span", { id: statusId, className: "sr-only", children: statusText })] }) }));
 });
 FileUploadItem.displayName = ITEM_NAME;
 function formatBytes(bytes) {
     if (bytes === 0)
-        return "0 B";
-    const sizes = ["B", "KB", "MB", "GB", "TB"];
+        return '0 B';
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${(bytes / 1024 ** i).toFixed(i ? 1 : 0)} ${sizes[i]}`;
 }
 function getFileIcon(file) {
     const type = file.type;
-    const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
-    if (type.startsWith("video/")) {
+    const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
+    if (type.startsWith('video/')) {
         return _jsx(FileVideoIcon, {});
     }
-    if (type.startsWith("audio/")) {
+    if (type.startsWith('audio/')) {
         return _jsx(FileAudioIcon, {});
     }
-    if (type.startsWith("text/") ||
-        ["txt", "md", "rtf", "pdf"].includes(extension)) {
+    if (type.startsWith('text/') ||
+        ['txt', 'md', 'rtf', 'pdf'].includes(extension)) {
         return _jsx(FileTextIcon, {});
     }
     if ([
-        "html",
-        "css",
-        "js",
-        "jsx",
-        "ts",
-        "tsx",
-        "json",
-        "xml",
-        "php",
-        "py",
-        "rb",
-        "java",
-        "c",
-        "cpp",
-        "cs",
+        'html',
+        'css',
+        'js',
+        'jsx',
+        'ts',
+        'tsx',
+        'json',
+        'xml',
+        'php',
+        'py',
+        'rb',
+        'java',
+        'c',
+        'cpp',
+        'cs',
     ].includes(extension)) {
         return _jsx(FileCodeIcon, {});
     }
-    if (["zip", "rar", "7z", "tar", "gz", "bz2"].includes(extension)) {
+    if (['zip', 'rar', '7z', 'tar', 'gz', 'bz2'].includes(extension)) {
         return _jsx(FileArchiveIcon, {});
     }
-    if (["exe", "msi", "app", "apk", "deb", "rpm"].includes(extension) ||
-        type.startsWith("application/")) {
+    if (['exe', 'msi', 'app', 'apk', 'deb', 'rpm'].includes(extension) ||
+        type.startsWith('application/')) {
         return _jsx(FileCogIcon, {});
     }
     return _jsx(FileIcon, {});
@@ -597,7 +597,7 @@ const FileUploadItemPreview = React.forwardRef((props, forwardedRef) => {
     const onPreviewRender = React.useCallback((file) => {
         if (render)
             return render(file);
-        if (itemContext.fileState?.file.type.startsWith("image/")) {
+        if (itemContext.fileState?.file.type.startsWith('image/')) {
             return (_jsx("img", { src: URL.createObjectURL(file), alt: file.name, className: "size-full object-cover", onLoad: (event) => {
                     if (!(event.target instanceof HTMLImageElement))
                         return;
@@ -608,44 +608,44 @@ const FileUploadItemPreview = React.forwardRef((props, forwardedRef) => {
     }, [render, itemContext.fileState?.file.type]);
     if (!itemContext.fileState)
         return null;
-    const ItemPreviewPrimitive = asChild ? Slot : "div";
-    return (_jsxs(ItemPreviewPrimitive, { "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-preview", ...previewProps, ref: forwardedRef, className: cn("relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded border bg-accent/50 [&>svg]:size-10", className), children: [onPreviewRender(itemContext.fileState.file), children] }));
+    const ItemPreviewPrimitive = asChild ? Slot : 'div';
+    return (_jsxs(ItemPreviewPrimitive, { "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-preview", ...previewProps, ref: forwardedRef, className: cn('relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded border bg-accent/50 [&>svg]:size-5', className), children: [onPreviewRender(itemContext.fileState.file), children] }));
 });
 FileUploadItemPreview.displayName = ITEM_PREVIEW_NAME;
 const FileUploadItemMetadata = React.forwardRef((props, forwardedRef) => {
-    const { asChild, size = "default", children, className, ...metadataProps } = props;
+    const { asChild, size = 'default', children, className, ...metadataProps } = props;
     const context = useFileUploadContext(ITEM_METADATA_NAME);
     const itemContext = useFileUploadItemContext(ITEM_METADATA_NAME);
     if (!itemContext.fileState)
         return null;
-    const ItemMetadataPrimitive = asChild ? Slot : "div";
-    return (_jsx(ItemMetadataPrimitive, { "data-slot": "file-upload-metadata", dir: context.dir, ...metadataProps, ref: forwardedRef, className: cn("flex min-w-0 flex-1 flex-col", className), children: children ?? (_jsxs(_Fragment, { children: [_jsx("span", { id: itemContext.nameId, className: cn("truncate font-medium text-sm", size === "sm" && "font-normal text-[13px] leading-snug"), children: itemContext.fileState.file.name }), _jsx("span", { id: itemContext.sizeId, className: cn("truncate text-muted-foreground text-xs", size === "sm" && "text-[11px]"), children: formatBytes(itemContext.fileState.file.size) }), itemContext.fileState.error && (_jsx("span", { id: itemContext.messageId, className: "text-destructive text-xs", children: itemContext.fileState.error }))] })) }));
+    const ItemMetadataPrimitive = asChild ? Slot : 'div';
+    return (_jsx(ItemMetadataPrimitive, { "data-slot": "file-upload-metadata", dir: context.dir, ...metadataProps, ref: forwardedRef, className: cn('flex min-w-0 flex-1 flex-col', className), children: children ?? (_jsxs(_Fragment, { children: [_jsx("span", { id: itemContext.nameId, className: cn('truncate font-medium text-sm', size === 'sm' && 'font-normal text-[13px] leading-snug'), children: itemContext.fileState.file.name }), _jsx("span", { id: itemContext.sizeId, className: cn('truncate text-muted-foreground text-xs', size === 'sm' && 'text-[11px]'), children: formatBytes(itemContext.fileState.file.size) }), itemContext.fileState.error && (_jsx("span", { id: itemContext.messageId, className: "text-destructive text-xs", children: itemContext.fileState.error }))] })) }));
 });
 FileUploadItemMetadata.displayName = ITEM_METADATA_NAME;
 const FileUploadItemProgress = React.forwardRef((props, forwardedRef) => {
-    const { variant = "linear", size = 40, asChild, forceMount, className, ...progressProps } = props;
+    const { variant = 'linear', size = 40, asChild, forceMount, className, ...progressProps } = props;
     const itemContext = useFileUploadItemContext(ITEM_PROGRESS_NAME);
     if (!itemContext.fileState)
         return null;
     const shouldRender = forceMount || itemContext.fileState.progress !== 100;
     if (!shouldRender)
         return null;
-    const ItemProgressPrimitive = asChild ? Slot : "div";
+    const ItemProgressPrimitive = asChild ? Slot : 'div';
     switch (variant) {
-        case "circular": {
+        case 'circular': {
             const circumference = 2 * Math.PI * ((size - 4) / 2);
             const strokeDashoffset = circumference - (itemContext.fileState.progress / 100) * circumference;
-            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": itemContext.fileState.progress, "aria-valuetext": `${itemContext.fileState.progress}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn("-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2", className), children: _jsxs("svg", { className: "rotate-[-90deg] transform", width: size, height: size, viewBox: `0 0 ${size} ${size}`, fill: "none", stroke: "currentColor", children: [_jsx("circle", { className: "text-primary/20", strokeWidth: "2", cx: size / 2, cy: size / 2, r: (size - 4) / 2 }), _jsx("circle", { className: "text-primary transition-[stroke-dashoffset] duration-300 ease-linear", strokeWidth: "2", strokeLinecap: "round", strokeDasharray: circumference, strokeDashoffset: strokeDashoffset, cx: size / 2, cy: size / 2, r: (size - 4) / 2 })] }) }));
+            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": itemContext.fileState.progress, "aria-valuetext": `${itemContext.fileState.progress}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn('-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2', className), children: _jsxs("svg", { className: "rotate-[-90deg] transform", width: size, height: size, viewBox: `0 0 ${size} ${size}`, fill: "none", stroke: "currentColor", children: [_jsx("circle", { className: "text-primary/20", strokeWidth: "2", cx: size / 2, cy: size / 2, r: (size - 4) / 2 }), _jsx("circle", { className: "text-primary transition-[stroke-dashoffset] duration-300 ease-linear", strokeWidth: "2", strokeLinecap: "round", strokeDasharray: circumference, strokeDashoffset: strokeDashoffset, cx: size / 2, cy: size / 2, r: (size - 4) / 2 })] }) }));
         }
-        case "fill": {
+        case 'fill': {
             const progressPercentage = itemContext.fileState.progress;
             const topInset = 100 - progressPercentage;
-            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": progressPercentage, "aria-valuetext": `${progressPercentage}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn("absolute inset-0 bg-primary/50 transition-[clip-path] duration-300 ease-linear", className), style: {
+            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": progressPercentage, "aria-valuetext": `${progressPercentage}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn('absolute inset-0 bg-primary/50 transition-[clip-path] duration-300 ease-linear', className), style: {
                     clipPath: `inset(${topInset}% 0% 0% 0%)`,
                 } }));
         }
         default:
-            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": itemContext.fileState.progress, "aria-valuetext": `${itemContext.fileState.progress}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn("relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20", className), children: _jsx("div", { className: "h-full w-full flex-1 bg-primary transition-transform duration-300 ease-linear", style: {
+            return (_jsx(ItemProgressPrimitive, { role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": itemContext.fileState.progress, "aria-valuetext": `${itemContext.fileState.progress}%`, "aria-labelledby": itemContext.nameId, "data-slot": "file-upload-progress", ...progressProps, ref: forwardedRef, className: cn('relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20', className), children: _jsx("div", { className: "h-full w-full flex-1 bg-primary transition-transform duration-300 ease-linear", style: {
                         transform: `translateX(-${100 - itemContext.fileState.progress}%)`,
                     } }) }));
     }
@@ -661,13 +661,13 @@ const FileUploadItemDelete = React.forwardRef((props, forwardedRef) => {
         if (!itemContext.fileState || event.defaultPrevented)
             return;
         store.dispatch({
-            variant: "REMOVE_FILE",
+            variant: 'REMOVE_FILE',
             file: itemContext.fileState.file,
         });
     }, [store, itemContext.fileState, propsRef.current?.onClick]);
     if (!itemContext.fileState)
         return null;
-    const ItemDeletePrimitive = asChild ? Slot : "button";
+    const ItemDeletePrimitive = asChild ? Slot : 'button';
     return (_jsx(ItemDeletePrimitive, { type: "button", "aria-controls": itemContext.id, "aria-describedby": itemContext.nameId, "data-slot": "file-upload-item-delete", ...deleteProps, ref: forwardedRef, onClick: onClick }));
 });
 FileUploadItemDelete.displayName = ITEM_DELETE_NAME;
@@ -681,13 +681,13 @@ const FileUploadClear = React.forwardRef((props, forwardedRef) => {
         propsRef.current?.onClick?.(event);
         if (event.defaultPrevented)
             return;
-        store.dispatch({ variant: "CLEAR" });
+        store.dispatch({ variant: 'CLEAR' });
     }, [store, propsRef]);
     const shouldRender = forceMount || useStore((state) => state.files.size > 0);
     if (!shouldRender)
         return null;
-    const ClearPrimitive = asChild ? Slot : "button";
-    return (_jsx(ClearPrimitive, { type: "button", "aria-controls": context.listId, "data-slot": "file-upload-clear", "data-disabled": isDisabled ? "" : undefined, ...clearProps, ref: forwardedRef, disabled: isDisabled, onClick: onClick }));
+    const ClearPrimitive = asChild ? Slot : 'button';
+    return (_jsx(ClearPrimitive, { type: "button", "aria-controls": context.listId, "data-slot": "file-upload-clear", "data-disabled": isDisabled ? '' : undefined, ...clearProps, ref: forwardedRef, disabled: isDisabled, onClick: onClick }));
 });
 FileUploadClear.displayName = CLEAR_NAME;
 const FileUpload = FileUploadRoot;

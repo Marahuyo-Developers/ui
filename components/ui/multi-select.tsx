@@ -192,7 +192,7 @@ export const MultiSelect = React.forwardRef<
             {...props}
             onClick={handleTogglePopover}
             className={cn(
-              'flex w-full p-1 rounded-md border min-h-9 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto',
+              "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 w-full",
               className,
             )}
           >
@@ -211,13 +211,6 @@ export const MultiSelect = React.forwardRef<
                           <IconComponent className="h-4 w-4 mr-2" />
                         )}
                         {option?.label}
-                        <XCircle
-                          className="ml-2 h-4 w-4 cursor-pointer"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            toggleOption(value);
-                          }}
-                        />
                       </Badge>
                     );
                   })}
@@ -229,37 +222,23 @@ export const MultiSelect = React.forwardRef<
                       )}
                     >
                       {`+ ${selectedValues.length - maxCount} more`}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          clearExtraOptions();
-                        }}
-                      />
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <XIcon
-                    className="h-4 mx-2 cursor-pointer text-muted-foreground"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      handleClear();
-                    }}
-                  />
+                <div className="flex items-center justify-between gap-2.5">
                   <Separator
                     orientation="vertical"
                     className="flex min-h-6 h-full"
                   />
-                  <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  <ChevronDown className="h-4 cursor-pointer text-muted-foreground" />
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full mx-auto">
-                <span className="text-sm text-muted-foreground mx-3">
+              <div className="flex items-center justify-between w-full ">
+                <span className="text-sm text-muted-foreground">
                   {placeholder}
                 </span>
-                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <ChevronDown className="h-4 cursor-pointer text-muted-foreground" />
               </div>
             )}
           </Button>

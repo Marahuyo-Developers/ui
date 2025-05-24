@@ -1,10 +1,10 @@
-import * as React from "react";
-type Direction = "ltr" | "rtl";
+import * as React from 'react';
+type Direction = 'ltr' | 'rtl';
 interface FileState {
     file: File;
     progress: number;
     error?: string;
-    status: "idle" | "uploading" | "error" | "success";
+    status: 'idle' | 'uploading' | 'error' | 'success';
 }
 interface StoreState {
     files: Map<File, FileState>;
@@ -12,7 +12,7 @@ interface StoreState {
     invalid: boolean;
 }
 declare function useStore<T>(selector: (state: StoreState) => T): T;
-interface FileUploadRootProps extends Omit<React.ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange"> {
+export interface FileUploadRootProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'defaultValue' | 'onChange'> {
     value?: File[];
     defaultValue?: File[];
     onValueChange?: (files: File[]) => void;
@@ -37,47 +37,47 @@ interface FileUploadRootProps extends Omit<React.ComponentPropsWithoutRef<"div">
     multiple?: boolean;
     required?: boolean;
 }
-interface FileUploadDropzoneProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadDropzoneProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
 }
 declare const FileUploadDropzone: React.ForwardRefExoticComponent<FileUploadDropzoneProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadTriggerProps extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadTriggerProps extends React.ComponentPropsWithoutRef<'button'> {
     asChild?: boolean;
 }
 declare const FileUploadTrigger: React.ForwardRefExoticComponent<FileUploadTriggerProps & React.RefAttributes<HTMLButtonElement>>;
-interface FileUploadListProps extends React.ComponentPropsWithoutRef<"div"> {
-    orientation?: "horizontal" | "vertical";
+interface FileUploadListProps extends React.ComponentPropsWithoutRef<'div'> {
+    orientation?: 'horizontal' | 'vertical';
     asChild?: boolean;
     forceMount?: boolean;
 }
 declare const FileUploadList: React.ForwardRefExoticComponent<FileUploadListProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadItemProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemProps extends React.ComponentPropsWithoutRef<'div'> {
     value: File;
     asChild?: boolean;
 }
 declare const FileUploadItem: React.ForwardRefExoticComponent<FileUploadItemProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadItemPreviewProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemPreviewProps extends React.ComponentPropsWithoutRef<'div'> {
     render?: (file: File) => React.ReactNode;
     asChild?: boolean;
 }
 declare const FileUploadItemPreview: React.ForwardRefExoticComponent<FileUploadItemPreviewProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadItemMetadataProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemMetadataProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
-    size?: "default" | "sm";
+    size?: 'default' | 'sm';
 }
 declare const FileUploadItemMetadata: React.ForwardRefExoticComponent<FileUploadItemMetadataProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadItemProgressProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemProgressProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
-    variant?: "linear" | "circular" | "fill";
+    variant?: 'linear' | 'circular' | 'fill';
     size?: number;
     forceMount?: boolean;
 }
 declare const FileUploadItemProgress: React.ForwardRefExoticComponent<FileUploadItemProgressProps & React.RefAttributes<HTMLDivElement>>;
-interface FileUploadItemDeleteProps extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadItemDeleteProps extends React.ComponentPropsWithoutRef<'button'> {
     asChild?: boolean;
 }
 declare const FileUploadItemDelete: React.ForwardRefExoticComponent<FileUploadItemDeleteProps & React.RefAttributes<HTMLButtonElement>>;
-interface FileUploadClearProps extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadClearProps extends React.ComponentPropsWithoutRef<'button'> {
     forceMount?: boolean;
     asChild?: boolean;
 }

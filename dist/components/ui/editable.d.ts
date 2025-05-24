@@ -1,6 +1,6 @@
-import * as React from "react";
-type Direction = "ltr" | "rtl";
-interface EditableContextValue {
+import * as React from 'react';
+type Direction = 'ltr' | 'rtl';
+export interface EditableContextValue {
     id: string;
     inputId: string;
     labelId: string;
@@ -15,14 +15,14 @@ interface EditableContextValue {
     dir?: Direction;
     maxLength?: number;
     placeholder?: string;
-    triggerMode: "click" | "dblclick" | "focus";
+    triggerMode: 'click' | 'dblclick' | 'focus';
     autosize: boolean;
     disabled?: boolean;
     readOnly?: boolean;
     required?: boolean;
     invalid?: boolean;
 }
-interface EditableRootProps extends Omit<React.ComponentPropsWithoutRef<"div">, "onSubmit"> {
+export interface EditableRootProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onSubmit'> {
     id?: string;
     defaultValue?: string;
     value?: string;
@@ -38,7 +38,7 @@ interface EditableRootProps extends Omit<React.ComponentPropsWithoutRef<"div">, 
     maxLength?: number;
     name?: string;
     placeholder?: string;
-    triggerMode?: EditableContextValue["triggerMode"];
+    triggerMode?: EditableContextValue['triggerMode'];
     asChild?: boolean;
     autosize?: boolean;
     disabled?: boolean;
@@ -46,38 +46,38 @@ interface EditableRootProps extends Omit<React.ComponentPropsWithoutRef<"div">, 
     required?: boolean;
     invalid?: boolean;
 }
-interface EditableLabelProps extends React.ComponentPropsWithoutRef<"label"> {
+export interface EditableLabelProps extends React.ComponentPropsWithoutRef<'label'> {
     asChild?: boolean;
 }
 declare const EditableLabel: React.ForwardRefExoticComponent<EditableLabelProps & React.RefAttributes<HTMLLabelElement>>;
-interface EditableAreaProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface EditableAreaProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
 }
 declare const EditableArea: React.ForwardRefExoticComponent<EditableAreaProps & React.RefAttributes<HTMLDivElement>>;
-interface EditablePreviewProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface EditablePreviewProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
 }
 declare const EditablePreview: React.ForwardRefExoticComponent<EditablePreviewProps & React.RefAttributes<HTMLDivElement>>;
-interface EditableInputProps extends React.ComponentPropsWithoutRef<"input"> {
+export interface EditableInputProps extends React.ComponentPropsWithoutRef<'input'> {
     asChild?: boolean;
     maxLength?: number;
 }
 declare const EditableInput: React.ForwardRefExoticComponent<EditableInputProps & React.RefAttributes<HTMLInputElement>>;
-interface EditableTriggerProps extends React.ComponentPropsWithoutRef<"button"> {
+export interface EditableTriggerProps extends React.ComponentPropsWithoutRef<'button'> {
     asChild?: boolean;
     forceMount?: boolean;
 }
 declare const EditableTrigger: React.ForwardRefExoticComponent<EditableTriggerProps & React.RefAttributes<HTMLButtonElement>>;
-interface EditableToolbarProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface EditableToolbarProps extends React.ComponentPropsWithoutRef<'div'> {
     asChild?: boolean;
-    orientation?: "horizontal" | "vertical";
+    orientation?: 'horizontal' | 'vertical';
 }
 declare const EditableToolbar: React.ForwardRefExoticComponent<EditableToolbarProps & React.RefAttributes<HTMLDivElement>>;
-interface EditableCancelProps extends React.ComponentPropsWithoutRef<"button"> {
+export interface EditableCancelProps extends React.ComponentPropsWithoutRef<'button'> {
     asChild?: boolean;
 }
 declare const EditableCancel: React.ForwardRefExoticComponent<EditableCancelProps & React.RefAttributes<HTMLButtonElement>>;
-interface EditableSubmitProps extends React.ComponentPropsWithoutRef<"button"> {
+export interface EditableSubmitProps extends React.ComponentPropsWithoutRef<'button'> {
     asChild?: boolean;
 }
 declare const EditableSubmit: React.ForwardRefExoticComponent<EditableSubmitProps & React.RefAttributes<HTMLButtonElement>>;
