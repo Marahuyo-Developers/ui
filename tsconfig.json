@@ -32,6 +32,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["components", "hooks", "lib","templates"],
+  "include": ["components", "hooks", "lib", "templates"],
   "exclude": ["node_modules", "dist"]
 }

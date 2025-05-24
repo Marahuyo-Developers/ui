@@ -1,5 +1,5 @@
-import type { StorybookConfig } from 'storybook-react-rsbuild'
-import { dirname, join } from 'node:path'
+import type { StorybookConfig } from 'storybook-react-rsbuild';
+import { dirname, join } from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import tailwindcss from '@tailwindcss/postcss';
 
@@ -10,7 +10,7 @@ const config: StorybookConfig = {
   },
   rsbuildFinal: (config) => {
     return {
-      plugins:[pluginReact()],
+      plugins: [pluginReact()],
       tools: {
         postcss: {
           postcssOptions: {
@@ -18,10 +18,13 @@ const config: StorybookConfig = {
           },
         },
       },
-      ...config
-    }
+      ...config,
+    };
   },
-  stories:['../stories/**/*.mdx','../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    '../stories/**/*.mdx',
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  ],
   docs: {
     defaultName: 'Docs',
     docsMode: false,
@@ -36,6 +39,6 @@ const config: StorybookConfig = {
     },
     check: true,
   },
-}
+};
 
-export default config
+export default config;

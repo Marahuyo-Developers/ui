@@ -1,6 +1,6 @@
-import type { Preview } from '@storybook/react'
-import '../styles/globals.css'
-import { ThemeProvider } from "../components/ui/theme-provider"
+import type { Preview } from '@storybook/react';
+import '../styles/globals.css';
+import { ThemeProvider } from '../components/ui/theme-provider';
 
 const preview: Preview = {
   parameters: {
@@ -14,12 +14,12 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <ThemeProvider>
-        <div className='bg-background text-foreground'>
+        <div className="bg-background text-foreground">
           <Story />
         </div>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default preview;
