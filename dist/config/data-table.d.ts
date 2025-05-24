@@ -1,193 +1,125 @@
 export type DataTableConfig = typeof dataTableConfig;
 export declare const dataTableConfig: {
-  textOperators: (
-    | {
+    textOperators: ({
         label: string;
-        value: 'iLike';
-      }
-    | {
+        value: "iLike";
+    } | {
         label: string;
-        value: 'notILike';
-      }
-    | {
+        value: "notILike";
+    } | {
         label: string;
-        value: 'eq';
-      }
-    | {
+        value: "eq";
+    } | {
         label: string;
-        value: 'ne';
-      }
-    | {
+        value: "ne";
+    } | {
         label: string;
-        value: 'isEmpty';
-      }
-    | {
+        value: "isEmpty";
+    } | {
         label: string;
-        value: 'isNotEmpty';
-      }
-  )[];
-  numericOperators: (
-    | {
+        value: "isNotEmpty";
+    })[];
+    numericOperators: ({
         label: string;
-        value: 'eq';
-      }
-    | {
+        value: "eq";
+    } | {
         label: string;
-        value: 'ne';
-      }
-    | {
+        value: "ne";
+    } | {
         label: string;
-        value: 'lt';
-      }
-    | {
+        value: "lt";
+    } | {
         label: string;
-        value: 'lte';
-      }
-    | {
+        value: "lte";
+    } | {
         label: string;
-        value: 'gt';
-      }
-    | {
+        value: "gt";
+    } | {
         label: string;
-        value: 'gte';
-      }
-    | {
+        value: "gte";
+    } | {
         label: string;
-        value: 'isBetween';
-      }
-    | {
+        value: "isBetween";
+    } | {
         label: string;
-        value: 'isEmpty';
-      }
-    | {
+        value: "isEmpty";
+    } | {
         label: string;
-        value: 'isNotEmpty';
-      }
-  )[];
-  dateOperators: (
-    | {
+        value: "isNotEmpty";
+    })[];
+    dateOperators: ({
         label: string;
-        value: 'eq';
-      }
-    | {
+        value: "eq";
+    } | {
         label: string;
-        value: 'ne';
-      }
-    | {
+        value: "ne";
+    } | {
         label: string;
-        value: 'lt';
-      }
-    | {
+        value: "lt";
+    } | {
         label: string;
-        value: 'gt';
-      }
-    | {
+        value: "gt";
+    } | {
         label: string;
-        value: 'lte';
-      }
-    | {
+        value: "lte";
+    } | {
         label: string;
-        value: 'gte';
-      }
-    | {
+        value: "gte";
+    } | {
         label: string;
-        value: 'isBetween';
-      }
-    | {
+        value: "isBetween";
+    } | {
         label: string;
-        value: 'isRelativeToToday';
-      }
-    | {
+        value: "isRelativeToToday";
+    } | {
         label: string;
-        value: 'isEmpty';
-      }
-    | {
+        value: "isEmpty";
+    } | {
         label: string;
-        value: 'isNotEmpty';
-      }
-  )[];
-  selectOperators: (
-    | {
+        value: "isNotEmpty";
+    })[];
+    selectOperators: ({
         label: string;
-        value: 'eq';
-      }
-    | {
+        value: "eq";
+    } | {
         label: string;
-        value: 'ne';
-      }
-    | {
+        value: "ne";
+    } | {
         label: string;
-        value: 'isEmpty';
-      }
-    | {
+        value: "isEmpty";
+    } | {
         label: string;
-        value: 'isNotEmpty';
-      }
-  )[];
-  multiSelectOperators: (
-    | {
+        value: "isNotEmpty";
+    })[];
+    multiSelectOperators: ({
         label: string;
-        value: 'inArray';
-      }
-    | {
+        value: "inArray";
+    } | {
         label: string;
-        value: 'notInArray';
-      }
-    | {
+        value: "notInArray";
+    } | {
         label: string;
-        value: 'isEmpty';
-      }
-    | {
+        value: "isEmpty";
+    } | {
         label: string;
-        value: 'isNotEmpty';
-      }
-  )[];
-  booleanOperators: (
-    | {
+        value: "isNotEmpty";
+    })[];
+    booleanOperators: ({
         label: string;
-        value: 'eq';
-      }
-    | {
+        value: "eq";
+    } | {
         label: string;
-        value: 'ne';
-      }
-  )[];
-  sortOrders: (
-    | {
+        value: "ne";
+    })[];
+    sortOrders: ({
         label: string;
-        value: 'asc';
-      }
-    | {
+        value: "asc";
+    } | {
         label: string;
-        value: 'desc';
-      }
-  )[];
-  filterVariants: readonly [
-    'text',
-    'number',
-    'range',
-    'date',
-    'dateRange',
-    'boolean',
-    'select',
-    'multiSelect',
-  ];
-  operators: readonly [
-    'iLike',
-    'notILike',
-    'eq',
-    'ne',
-    'inArray',
-    'notInArray',
-    'isEmpty',
-    'isNotEmpty',
-    'lt',
-    'lte',
-    'gt',
-    'gte',
-    'isBetween',
-    'isRelativeToToday',
-  ];
-  joinOperators: readonly ['and', 'or'];
+        value: "desc";
+    })[];
+    filterVariants: readonly ["text", "number", "range", "date", "dateRange", "boolean", "select", "multiSelect"];
+    operators: readonly ["iLike", "notILike", "eq", "ne", "inArray", "notInArray", "isEmpty", "isNotEmpty", "lt", "lte", "gt", "gte", "isBetween", "isRelativeToToday"];
+    joinOperators: readonly ["and", "or"];
 };
 //# sourceMappingURL=data-table.d.ts.map
