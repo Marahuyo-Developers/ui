@@ -1,6 +1,6 @@
-import * as React from "react";
-import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "../../components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
+import * as React from 'react';
+import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../../components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 type FacetedValue<Multiple extends boolean> = Multiple extends true ? string[] : string;
 interface FacetedProps<Multiple extends boolean = false> extends React.ComponentProps<typeof Popover> {
     value?: FacetedValue<Multiple>;
@@ -10,7 +10,7 @@ interface FacetedProps<Multiple extends boolean = false> extends React.Component
 }
 declare function Faceted<Multiple extends boolean = false>(props: FacetedProps<Multiple>): import("react/jsx-runtime").JSX.Element;
 declare function FacetedTrigger(props: React.ComponentProps<typeof PopoverTrigger>): import("react/jsx-runtime").JSX.Element;
-interface FacetedBadgeListProps extends React.ComponentProps<"div"> {
+interface FacetedBadgeListProps extends React.ComponentProps<'div'> {
     options?: {
         label: string;
         value: string;

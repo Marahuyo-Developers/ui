@@ -13,6 +13,9 @@ interface UseDataTableProps<TData> extends Omit<TableOptions<TData>, 'state' | '
     scroll?: boolean;
     shallow?: boolean;
     startTransition?: React.TransitionStartFunction;
+    pageKey?: string;
+    perPageKey?: string;
+    sortKey?: string;
 }
 export declare function useDataTable<TData>(props: UseDataTableProps<TData>): {
     table: import("@tanstack/table-core").Table<TData>;

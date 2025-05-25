@@ -1,8 +1,8 @@
-"use client";
+'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import * as React from "react";
-import { Input } from "../../components/ui/input";
-import { cn } from "../../lib/utils";
+import * as React from 'react';
+import { Input } from '../../components/ui/input';
+import { cn } from '../../lib/utils';
 export function DataTableRangeFilter({ filter, column, inputId, onFilterUpdate, className, ...props }) {
     const meta = column.columnDef.meta;
     const [min, max] = React.useMemo(() => {
@@ -15,11 +15,11 @@ export function DataTableRangeFilter({ filter, column, inputId, onFilterUpdate, 
         return [values[0], values[1]];
     }, [column]);
     const formatValue = React.useCallback((value) => {
-        if (value === undefined || value === "")
-            return "";
+        if (value === undefined || value === '')
+            return '';
         const numValue = Number(value);
         return Number.isNaN(numValue)
-            ? ""
+            ? ''
             : numValue.toLocaleString(undefined, {
                 maximumFractionDigits: 0,
             });
@@ -27,17 +27,17 @@ export function DataTableRangeFilter({ filter, column, inputId, onFilterUpdate, 
     const value = React.useMemo(() => {
         if (Array.isArray(filter.value))
             return filter.value.map(formatValue);
-        return [formatValue(filter.value), ""];
+        return [formatValue(filter.value), ''];
     }, [filter.value, formatValue]);
     const onRangeValueChange = React.useCallback((value, isMin) => {
         const numValue = Number(value);
         const currentValues = Array.isArray(filter.value)
             ? filter.value
-            : ["", ""];
+            : ['', ''];
         const otherValue = isMin
-            ? (currentValues[1] ?? "")
-            : (currentValues[0] ?? "");
-        if (value === "" ||
+            ? (currentValues[1] ?? '')
+            : (currentValues[0] ?? '');
+        if (value === '' ||
             (!Number.isNaN(numValue) &&
                 (isMin
                     ? numValue >= min && numValue <= (Number(otherValue) || max)
@@ -47,6 +47,6 @@ export function DataTableRangeFilter({ filter, column, inputId, onFilterUpdate, 
             });
         }
     }, [filter.filterId, filter.value, min, max, onFilterUpdate]);
-    return (_jsxs("div", { "data-slot": "range", className: cn("flex w-full items-center gap-2", className), ...props, children: [_jsx(Input, { id: `${inputId}-min`, type: "number", "aria-label": `${meta?.label} minimum value`, "aria-valuemin": min, "aria-valuemax": max, "data-slot": "range-min", inputMode: "numeric", placeholder: min.toString(), min: min, max: max, className: "h-8 w-full rounded", defaultValue: value[0], onChange: (event) => onRangeValueChange(event.target.value, true) }), _jsx("span", { className: "sr-only shrink-0 text-muted-foreground", children: "to" }), _jsx(Input, { id: `${inputId}-max`, type: "number", "aria-label": `${meta?.label} maximum value`, "aria-valuemin": min, "aria-valuemax": max, "data-slot": "range-max", inputMode: "numeric", placeholder: max.toString(), min: min, max: max, className: "h-8 w-full rounded", defaultValue: value[1], onChange: (event) => onRangeValueChange(event.target.value) })] }));
+    return (_jsxs("div", { "data-slot": "range", className: cn('flex w-full items-center gap-2', className), ...props, children: [_jsx(Input, { id: `${inputId}-min`, type: "number", "aria-label": `${meta?.label} minimum value`, "aria-valuemin": min, "aria-valuemax": max, "data-slot": "range-min", inputMode: "numeric", placeholder: min.toString(), min: min, max: max, className: "h-8 w-full rounded", defaultValue: value[0], onChange: (event) => onRangeValueChange(event.target.value, true) }), _jsx("span", { className: "sr-only shrink-0 text-muted-foreground", children: "to" }), _jsx(Input, { id: `${inputId}-max`, type: "number", "aria-label": `${meta?.label} maximum value`, "aria-valuemin": min, "aria-valuemax": max, "data-slot": "range-max", inputMode: "numeric", placeholder: max.toString(), min: min, max: max, className: "h-8 w-full rounded", defaultValue: value[1], onChange: (event) => onRangeValueChange(event.target.value) })] }));
 }
 //# sourceMappingURL=data-table-range-filter.js.map

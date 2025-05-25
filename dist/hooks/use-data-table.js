@@ -4,14 +4,11 @@ import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState, useQueryS
 import * as React from 'react';
 import { useDebouncedCallback } from '../hooks/use-debounced-callback';
 import { getSortingStateParser } from '../lib/parsers';
-const PAGE_KEY = 'page';
-const PER_PAGE_KEY = 'perPage';
-const SORT_KEY = 'sort';
 const ARRAY_SEPARATOR = ',';
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
 export function useDataTable(props) {
-    const { columns, pageCount = -1, initialState, history = 'replace', debounceMs = DEBOUNCE_MS, throttleMs = THROTTLE_MS, clearOnDefault = false, enableAdvancedFilter = false, scroll = false, shallow = true, startTransition, ...tableProps } = props;
+    const { columns, pageCount = -1, initialState, history = 'replace', debounceMs = DEBOUNCE_MS, throttleMs = THROTTLE_MS, clearOnDefault = false, enableAdvancedFilter = false, scroll = false, shallow = true, startTransition, pageKey = 'page', perPageKey = 'perPage', sortKey = 'sort', ...tableProps } = props;
     const queryStateOptions = React.useMemo(() => ({
         history,
         scroll,
@@ -31,8 +28,8 @@ export function useDataTable(props) {
     ]);
     const [rowSelection, setRowSelection] = React.useState(initialState?.rowSelection ?? {});
     const [columnVisibility, setColumnVisibility] = React.useState(initialState?.columnVisibility ?? {});
-    const [page, setPage] = useQueryState(PAGE_KEY, parseAsInteger.withOptions(queryStateOptions).withDefault(1));
-    const [perPage, setPerPage] = useQueryState(PER_PAGE_KEY, parseAsInteger
+    const [page, setPage] = useQueryState(pageKey, parseAsInteger.withOptions(queryStateOptions).withDefault(1));
+    const [perPage, setPerPage] = useQueryState(perPageKey, parseAsInteger
         .withOptions(queryStateOptions)
         .withDefault(initialState?.pagination?.pageSize ?? 10));
     const pagination = React.useMemo(() => {
@@ -55,7 +52,7 @@ export function useDataTable(props) {
     const columnIds = React.useMemo(() => {
         return new Set(columns.map((column) => column.id).filter(Boolean));
     }, [columns]);
-    const [sorting, setSorting] = useQueryState(SORT_KEY, getSortingStateParser(columnIds)
+    const [sorting, setSorting] = useQueryState(sortKey, getSortingStateParser(columnIds)
         .withOptions(queryStateOptions)
         .withDefault(initialState?.sorting ?? []));
     const onSortingChange = React.useCallback((updaterOrValue) => {

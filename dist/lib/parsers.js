@@ -1,6 +1,6 @@
-import { createParser } from "nuqs/server";
-import { z } from "zod";
-import { dataTableConfig } from "../config/data-table";
+import { createParser } from 'nuqs/server';
+import { z } from 'zod';
+import { dataTableConfig } from '../config/data-table';
 const sortingItemSchema = z.object({
     id: z.string(),
     desc: z.boolean(),

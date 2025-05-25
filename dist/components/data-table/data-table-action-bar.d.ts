@@ -1,7 +1,7 @@
-import { Button } from "../../components/ui/button";
-import type { Table } from "@tanstack/react-table";
-import { motion } from "motion/react";
-import * as React from "react";
+import { Button } from '../../components/ui/button';
+import type { Table } from '@tanstack/react-table';
+import { motion } from 'motion/react';
+import * as React from 'react';
 interface DataTableActionBarProps<TData> extends React.ComponentProps<typeof motion.div> {
     table: Table<TData>;
     visible?: boolean;

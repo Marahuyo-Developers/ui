@@ -1,6 +1,6 @@
-import type { Table } from "@tanstack/react-table";
-import * as React from "react";
-import { PopoverContent } from "../../components/ui/popover";
+import type { Table } from '@tanstack/react-table';
+import * as React from 'react';
+import { PopoverContent } from '../../components/ui/popover';
 interface DataTableSortListProps<TData> extends React.ComponentProps<typeof PopoverContent> {
     table: Table<TData>;
 }
