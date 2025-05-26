@@ -35,6 +35,7 @@ export default function SingleSelectField({
       <Select
         onValueChange={field.handleChange}
         defaultValue={field.state.value}
+        value={field.state.value}
       >
         <SelectTrigger className="w-full">
           <SelectValue placeholder={placeHolder} />
