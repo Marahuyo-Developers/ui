@@ -1,18 +1,22 @@
 import { cn } from '@/lib/utils';
 import { useFieldContext } from '.';
 import { Label } from '../ui/label';
-import { MultiSelect } from '../ui/multi-select';
+import { MultiSelect, type MultiSelectProps } from '../ui/multi-select';
 
 export default function MultiSelectField({
   labelProps,
   containerProps,
   placeHolder,
   options,
+  multiSelectProps,
 }: {
   labelProps?: React.ComponentProps<'label'>;
   containerProps?: React.ComponentProps<'div'>;
   options: { label: string; value: string }[];
   placeHolder?: string;
+  multiSelectProps?: React.ForwardRefExoticComponent<
+    MultiSelectProps & React.RefAttributes<HTMLButtonElement>
+  >;
 }) {
   const field = useFieldContext<string[]>();
 
@@ -32,6 +36,7 @@ export default function MultiSelectField({
         onValueChange={field.handleChange}
         placeholder={placeHolder}
         variant="default"
+        {...multiSelectProps}
       />
     </div>
   );

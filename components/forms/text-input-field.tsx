@@ -23,11 +23,10 @@ export default function TextInputField({
     >
       <Label className="pb-1.5" {...labelProps} />
       <Input
-        {...inputProps}
         defaultValue={field.state.value}
-        value={field.state.value}
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
+        {...inputProps}
       />
     </div>
   );

@@ -23,11 +23,10 @@ export default function TextAreaInputField({
     >
       <Label className="pb-1.5" {...labelProps} />
       <Textarea
-        {...textAreaProps}
         defaultValue={field.state.value}
-        value={field.state.value}
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
+        {...textAreaProps}
       />
     </div>
   );
