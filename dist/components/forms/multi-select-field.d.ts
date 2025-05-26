@@ -7,6 +7,6 @@ export default function MultiSelectField({ labelProps, containerProps, placeHold
         value: string;
     }[];
     placeHolder?: string;
-    multiSelectProps?: React.ForwardRefExoticComponent<MultiSelectProps & React.RefAttributes<HTMLButtonElement>>;
+    multiSelectProps?: MultiSelectProps & React.RefAttributes<HTMLButtonElement>;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=multi-select-field.d.ts.map

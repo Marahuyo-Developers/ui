@@ -14,9 +14,7 @@ export default function MultiSelectField({
   containerProps?: React.ComponentProps<'div'>;
   options: { label: string; value: string }[];
   placeHolder?: string;
-  multiSelectProps?: React.ForwardRefExoticComponent<
-    MultiSelectProps & React.RefAttributes<HTMLButtonElement>
-  >;
+  multiSelectProps?: MultiSelectProps & React.RefAttributes<HTMLButtonElement>;
 }) {
   const field = useFieldContext<string[]>();
 
