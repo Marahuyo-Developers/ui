@@ -1,14 +1,12 @@
 import { createFormHookContexts, createFormHook } from '@tanstack/react-form';
 import { Button, type buttonVariants } from '../ui/button';
-import { lazy } from 'react';
 import type { VariantProps } from 'class-variance-authority';
-
-const TextInputField = lazy(() => import('./text-input-field'));
-const TextAreaInputField = lazy(() => import('./text-area-field'));
-const MultiSelectField = lazy(() => import('./multi-select-field'));
-const SingleSelectField = lazy(() => import('./single-select-field'));
-const SingleDateInputField = lazy(() => import('./single-date-input-field'));
-const FileUploadField = lazy(() => import('./file-upload-field'));
+import TextInputField from './text-input-field';
+import TextAreaInputField from './text-area-field';
+import MultiSelectField from './multi-select-field';
+import SingleSelectField from './single-select-field';
+import SingleDateInputField from './single-date-input-field';
+import FileUploadField from './file-upload-field';
 
 export function SubscribeButton({
   buttonProps,
