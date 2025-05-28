@@ -1,5 +1,11 @@
 import { type buttonVariants } from '../ui/button';
 import type { VariantProps } from 'class-variance-authority';
+import TextInputField from './text-input-field';
+import TextAreaInputField from './text-area-field';
+import MultiSelectField from './multi-select-field';
+import SingleSelectField from './single-select-field';
+import SingleDateInputField from './single-date-input-field';
+import FileUploadField from './file-upload-field';
 export declare function SubscribeButton({ buttonProps, }: {
     buttonProps?: React.ComponentProps<'button'> & VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
@@ -14,21 +20,21 @@ export declare const useAppForm: <TFormData, TOnMount extends import("@tanstack/
     readonly SubscribeButton: typeof SubscribeButton;
 }> & {
     AppField: import("@tanstack/react-form").FieldComponent<TFormData, TOnMount, TOnChange, TOnChangeAsync, TOnBlur, TOnBlurAsync, TOnSubmit, TOnSubmitAsync, TOnServer, TSubmitMeta, NoInfer<{
-        readonly TextInputField: import("react").LazyExoticComponent<typeof import("./text-input-field").default>;
-        readonly SingleSelectField: import("react").LazyExoticComponent<typeof import("./single-select-field").default>;
-        readonly TextAreaInputField: import("react").LazyExoticComponent<typeof import("./text-area-field").default>;
-        readonly MultiSelectField: import("react").LazyExoticComponent<typeof import("./multi-select-field").default>;
-        readonly SingleDateInputField: import("react").LazyExoticComponent<typeof import("./single-date-input-field").default>;
-        readonly FileUploadField: import("react").LazyExoticComponent<typeof import("./file-upload-field").default>;
+        readonly TextInputField: typeof TextInputField;
+        readonly SingleSelectField: typeof SingleSelectField;
+        readonly TextAreaInputField: typeof TextAreaInputField;
+        readonly MultiSelectField: typeof MultiSelectField;
+        readonly SingleDateInputField: typeof SingleDateInputField;
+        readonly FileUploadField: typeof FileUploadField;
     }>>;
     AppForm: import("react").ComponentType<import("react").PropsWithChildren>;
 }, withForm: <TFormData, TOnMount extends import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined, TOnChange extends import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined, TOnChangeAsync extends import("@tanstack/form-core").FormAsyncValidateOrFn<TFormData> | undefined, TOnBlur extends import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined, TOnBlurAsync extends import("@tanstack/form-core").FormAsyncValidateOrFn<TFormData> | undefined, TOnSubmit extends import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined, TOnSubmitAsync extends import("@tanstack/form-core").FormAsyncValidateOrFn<TFormData> | undefined, TOnServer extends import("@tanstack/form-core").FormAsyncValidateOrFn<TFormData> | undefined, TSubmitMeta, TRenderProps extends Record<string, unknown> = {}>({ render, props, }: import("@tanstack/react-form").WithFormProps<TFormData, TOnMount, TOnChange, TOnChangeAsync, TOnBlur, TOnBlurAsync, TOnSubmit, TOnSubmitAsync, TOnServer, TSubmitMeta, {
-    readonly TextInputField: import("react").LazyExoticComponent<typeof import("./text-input-field").default>;
-    readonly SingleSelectField: import("react").LazyExoticComponent<typeof import("./single-select-field").default>;
-    readonly TextAreaInputField: import("react").LazyExoticComponent<typeof import("./text-area-field").default>;
-    readonly MultiSelectField: import("react").LazyExoticComponent<typeof import("./multi-select-field").default>;
-    readonly SingleDateInputField: import("react").LazyExoticComponent<typeof import("./single-date-input-field").default>;
-    readonly FileUploadField: import("react").LazyExoticComponent<typeof import("./file-upload-field").default>;
+    readonly TextInputField: typeof TextInputField;
+    readonly SingleSelectField: typeof SingleSelectField;
+    readonly TextAreaInputField: typeof TextAreaInputField;
+    readonly MultiSelectField: typeof MultiSelectField;
+    readonly SingleDateInputField: typeof SingleDateInputField;
+    readonly FileUploadField: typeof FileUploadField;
 }, {
     readonly SubscribeButton: typeof SubscribeButton;
 }, TRenderProps>) => (props: import("react").PropsWithChildren<NoInfer<[unknown] extends [TRenderProps] ? any : TRenderProps> & {
@@ -36,12 +42,12 @@ export declare const useAppForm: <TFormData, TOnMount extends import("@tanstack/
         readonly SubscribeButton: typeof SubscribeButton;
     }> & {
         AppField: import("@tanstack/react-form").FieldComponent<[unknown] extends [TFormData] ? any : TFormData, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnMount] ? [TOnMount] extends [TOnMount & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnMount : TOnMount, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnChange] ? [TOnChange] extends [TOnChange & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnChange : TOnChange, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnChangeAsync] ? [TOnChangeAsync] extends [TOnChangeAsync & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnChangeAsync : TOnChangeAsync, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnBlur] ? [TOnBlur] extends [TOnBlur & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnBlur : TOnBlur, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnBlurAsync] ? [TOnBlurAsync] extends [TOnBlurAsync & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnBlurAsync : TOnBlurAsync, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnSubmit] ? [TOnSubmit] extends [TOnSubmit & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnSubmit : TOnSubmit, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnSubmitAsync] ? [TOnSubmitAsync] extends [TOnSubmitAsync & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnSubmitAsync : TOnSubmitAsync, [import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined] extends [TOnServer] ? [TOnServer] extends [TOnServer & (import("@tanstack/form-core").FormValidateOrFn<TFormData> | undefined)] ? any : TOnServer : TOnServer, [unknown] extends [TSubmitMeta] ? any : TSubmitMeta, NoInfer<{
-            readonly TextInputField: import("react").LazyExoticComponent<typeof import("./text-input-field").default>;
-            readonly SingleSelectField: import("react").LazyExoticComponent<typeof import("./single-select-field").default>;
-            readonly TextAreaInputField: import("react").LazyExoticComponent<typeof import("./text-area-field").default>;
-            readonly MultiSelectField: import("react").LazyExoticComponent<typeof import("./multi-select-field").default>;
-            readonly SingleDateInputField: import("react").LazyExoticComponent<typeof import("./single-date-input-field").default>;
-            readonly FileUploadField: import("react").LazyExoticComponent<typeof import("./file-upload-field").default>;
+            readonly TextInputField: typeof TextInputField;
+            readonly SingleSelectField: typeof SingleSelectField;
+            readonly TextAreaInputField: typeof TextAreaInputField;
+            readonly MultiSelectField: typeof MultiSelectField;
+            readonly SingleDateInputField: typeof SingleDateInputField;
+            readonly FileUploadField: typeof FileUploadField;
         }>>;
         AppForm: import("react").ComponentType<import("react").PropsWithChildren>;
     };

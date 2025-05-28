@@ -1,5 +1,6 @@
 import type { DayPicker } from 'react-day-picker';
 import type { DayPickerSingleProps } from 'react-day-picker';
+import type React from 'react';
 export default function SingleDateInputField({ labelProps, containerProps, calendarProps, }: {
     labelProps?: React.ComponentProps<'label'>;
     containerProps?: React.ComponentProps<'div'>;
