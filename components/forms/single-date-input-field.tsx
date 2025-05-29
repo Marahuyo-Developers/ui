@@ -72,6 +72,7 @@ export default function SingleDateInputField({
               'w-full justify-start text-left font-normal',
               !field.state.value && 'text-muted-foreground',
             )}
+            disabled={!!calendarProps?.disabled}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {field.state.value ? (
@@ -91,7 +92,12 @@ export default function SingleDateInputField({
               initialFocus
               {...calendarProps}
             />
-            <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
+            <div
+              className={cn(
+                !!calendarProps?.disabled && 'hidden',
+                'flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x',
+              )}
+            >
               <ScrollArea className="w-64 sm:w-auto">
                 <div className="flex sm:flex-col p-2">
                   {hours.reverse().map((hour) => (
