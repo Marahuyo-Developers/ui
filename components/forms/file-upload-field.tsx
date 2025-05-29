@@ -65,11 +65,13 @@ export default function FileUploadField({
             <FileUploadItem key={file.name} value={file}>
               <FileUploadItemPreview />
               <FileUploadItemMetadata />
-              <FileUploadItemDelete asChild>
-                <Button variant="ghost" size="icon" className="size-7">
-                  <X />
-                </Button>
-              </FileUploadItemDelete>
+              {!fileUploadProps?.disabled && (
+                <FileUploadItemDelete asChild>
+                  <Button variant="ghost" size="icon" className="size-7">
+                    <X />
+                  </Button>
+                </FileUploadItemDelete>
+              )}
             </FileUploadItem>
           ))}
         </FileUploadList>
